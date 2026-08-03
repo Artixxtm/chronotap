@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #ffffff;
+  --app-vh: 100dvh;
+  --font-second-family: var(--font-dekko);
+}
+
+html:lang(uk),
+html:lang(ru) {
+  --font-second-family: var(--font-neucha);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+::selection {
+  background: rgba(255, 162, 0, 1);
+  color: #fff;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@utility font-main {
+  font-family: var(--font-tektur);
+}
+
+@utility font-second {
+  font-family: var(--font-second-family);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 80%,
+    rgba(0, 0, 0, 0.4)
+  );
+}
+
+.text-2xl-fluid {
+  font-size: clamp(1.25rem, 6.8vw, 2.75rem);
+  line-height: calc(2 / 1.5);
+}
+
+.inGlow, .secondaryBtn {
+  position: relative;
+  transition: transform 0.4s ease 0s;
+}
+
+.inGlow:active, .secondaryBtn:active {
+  transform: scale(0.9);
+}
+
+.inGlow .span-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.inGlow .span-container span {
+  position: relative;
+  z-index: 2;
+}
+
+.inGlow .span-container::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.inGlow .span-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 8px 1px rgba(255, 162, 0, 0.85),
+    inset 0 0 22px 4px rgba(255, 162, 0, 0.45),
+    inset 0 0 40px 8px rgba(255, 162, 0, 0.25);
+  opacity: 0.55;
+  will-change: opacity;
+  animation: edgeGlowPulse 2.4s ease-in-out infinite;
+  transition: box-shadow 350ms ease, opacity 350ms ease 0s;
+  pointer-events: none;
+}
+
+.inGlow:disabled .span-container::after {
+  opacity: 0 !important;
+}
+
+.inGlow:hover .span-container::after {
+  box-shadow:
+    inset 0 0 12px 2px rgba(255, 178, 40, 1),
+    inset 0 0 32px 6px rgba(255, 162, 0, 0.75),
+    inset 0 0 56px 12px rgba(255, 162, 0, 0.4);
+}
+
+@keyframes edgeGlowPulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inGlow .span-container::after {
+    animation: none;
+  }
+}
+
+.customDropShadow {
+  filter: drop-shadow(0px -5px 20px rgba(0, 0, 0, 0.3));
+}

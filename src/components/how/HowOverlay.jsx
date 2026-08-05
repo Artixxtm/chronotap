@@ -35,44 +35,50 @@ const HowOverlay = forwardRef(function HowOverlay(
       {HOW_STEPS.map((step, i) => {
         const content = messages.how.steps[step.id];
         return (
-        <div
-          key={step.id}
-          ref={(el) => (stepRefs.current[i] = el)}
-          className="pointer-events-none absolute inset-0"
-        >
-          {/* Mobile */}
-          <div className={`flex h-full flex-col items-center px-6 ${step.index ? "pt-22" : "pt-20"} text-center md:hidden`}>
-            <h3 className="font-main font-medium leading-none text-black text-[clamp(3rem,15vw,4.5rem)]">
-              {content.heading}
-            </h3>
-            <p className={`mt-1 font-main ${!step.index && "max-w-45"} font-medium leading-[130%] ${step.index ? "mt-4" : "mt-2"} text-black text-[clamp(1.4rem,5vw,1.5rem)]`}>
-              {content.title}
-            </p>
-            {content.description && (
-              <p className="font-second text-base tracking-wide text-black/60">
-                {content.description}
-              </p>
-            )}
-          </div>
-
-          {/* Desktop */}
-          <div className="hidden h-full items-center justify-between px-10 md:flex lg:px-16">
-            <h3 className="font-main font-medium leading-none text-black text-[clamp(3rem,9vw,7rem)]">
-              {content.heading}
-            </h3>
-
-            <div className={`${step.index ? "max-w-sm" : "max-w-70"} text-right`}>
-              <p className="font-main font-medium text-black text-[clamp(1.8rem,5.6vw,2.25rem)] leading-[135%] md:text-2xl lg:text-3xl 2xl:text-4xl md:leading-[130%]">
+          <div
+            key={step.id}
+            ref={(el) => (stepRefs.current[i] = el)}
+            className="pointer-events-none absolute inset-0"
+          >
+            {/* Mobile */}
+            <div
+              className={`flex h-full flex-col items-center px-6 ${step.index ? "pt-22 max-[360px]:pt-18" : "pt-20 max-[360px]:pt-16"} text-center md:hidden`}
+            >
+              <h3 className="font-main font-medium leading-none text-black text-[clamp(3rem,15vw,4.5rem)] max-[360px]:text-[clamp(1.7rem,12vw,4.5rem)]">
+                {content.heading}
+              </h3>
+              <p
+                className={`mt-1 font-main ${!step.index && "max-w-50"} font-medium leading-[130%] ${step.index ? "mt-4 max-[360px]:mt-2" : "mt-2"} text-black text-[clamp(1.4rem,5vw,1.5rem)] max-[360px]:text-[clamp(1.1rem,4vw,1.5rem)]`}
+              >
                 {content.title}
               </p>
               {content.description && (
-                <p className="mt-1 font-second text-lg tracking-wide text-black/60">
+                <p className="font-second text-base max-[360px]:text-xs tracking-wide text-black/60">
                   {content.description}
                 </p>
               )}
             </div>
+
+            {/* Desktop */}
+            <div className="hidden h-full items-center justify-between px-10 md:flex lg:px-16">
+              <h3 className="font-main font-medium leading-none text-black text-[clamp(3rem,9vw,7rem)]">
+                {content.heading}
+              </h3>
+
+              <div
+                className={`${step.index ? "max-w-sm" : "max-w-70"} text-right`}
+              >
+                <p className="font-main font-medium text-black text-[clamp(1.8rem,5.6vw,2.25rem)] leading-[135%] md:text-2xl lg:text-3xl 2xl:text-4xl md:leading-[130%]">
+                  {content.title}
+                </p>
+                {content.description && (
+                  <p className="mt-1 font-second text-lg tracking-wide text-black/60">
+                    {content.description}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
         );
       })}
 

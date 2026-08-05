@@ -88,14 +88,14 @@ const MenuPanel = ({ isOpen, onClose, theme = "light" }) => {
                   href={localizedPath(locale, link.href)}
                   variants={itemVariants}
                   onClick={() => onClose()}
-                  className={`font-main w-fit cursor-pointer uppercase text-[clamp(1.35rem,7vw,3rem)] md:text-5xl 2xl:text-6xl font-medium leading-none hover:opacity-60! hover:transition-opacity hover:duration-500 ${BUTTON_RADIUS_S} px-2.5 py-2 md:mt-6 sm:mt-4 mt-2`}
+                  className={`font-main w-fit cursor-pointer uppercase max-[360px]:text-[clamp(1.2rem,5vw,3rem)] text-[clamp(1.35rem,7vw,3rem)] md:text-5xl 2xl:text-6xl font-medium leading-none hover:opacity-60! hover:transition-opacity hover:duration-500 ${BUTTON_RADIUS_S} px-2.5 py-2 md:mt-6 sm:mt-4 mt-2`}
                   style={{
                     backgroundColor: surface.contrast,
                     color: surface.base,
                   }}
                 >
                   <span>/</span>{" "}
-                  <span className={"px-2.5 pr-5"}>{label}</span>
+                  <span className={"max-[360px]:px-1 px-2.5 max-[360px]:pr-2 pr-5"}>{label}</span>
                 </CLink>
               );
             else
@@ -113,7 +113,7 @@ const MenuPanel = ({ isOpen, onClose, theme = "light" }) => {
                     }
                     onClose();
                   }}
-                  className="font-main w-fit cursor-pointer uppercase text-[clamp(1.35rem,7vw,3rem)] md:text-5xl 2xl:text-6xl font-medium leading-none hover:opacity-60! hover:transition-opacity hover:duration-500"
+                  className="font-main w-fit cursor-pointer uppercase max-[360px]:text-[clamp(1.2rem,5vw,3rem)] text-[clamp(1.35rem,7vw,3rem)] md:text-5xl 2xl:text-6xl font-medium leading-none hover:opacity-60! hover:transition-opacity hover:duration-500"
                 >
                   <span className={"opacity-30"}>#</span>{" "}
                   <span>{label}</span>
@@ -129,7 +129,7 @@ const MenuPanel = ({ isOpen, onClose, theme = "light" }) => {
           <motion.q
             key={"q-key"}
             variants={itemVariants}
-            className="font-second md:text-lg text-base md:mr-2 ml-0.5 opacity-75 tracking-wide"
+            className="font-second md:text-lg max-[360px]:text-xs text-base md:mr-2 ml-0.5 opacity-75 tracking-wide"
           >
             {messages.nav.quote}
           </motion.q>

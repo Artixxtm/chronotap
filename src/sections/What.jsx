@@ -10,6 +10,7 @@ import {
 import { motion, useReducedMotion } from "framer-motion";
 import { FADE_UP_CONTAINER, FADE_UP_ITEM } from "@/constants/animations";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const ORBIT_DURATION_MS = 110000;
@@ -19,7 +20,7 @@ const ANGLE_JITTER = 0.08;
 const RADIUS_JITTER = 0.05;
 
 const PILL_CLASSES =
-  "whitespace-nowrap rounded-full bg-white px-3.5 font-second tracking-wide text-black md:px-4 text-black/60 text-sm md:text-lg";
+  "whitespace-nowrap rounded-full bg-white px-3.5 font-second tracking-wide text-black md:px-4 text-black/60 max-[360px]:text-xs text-sm md:text-lg";
 
 function usePillJitter(count) {
   return useMemo(
@@ -92,6 +93,7 @@ function useOrbit(containerRef, itemRefs, count, jitter, disabled) {
 const What = forwardRef(function What({ children }, ref) {
   const { messages } = useI18n();
   const bullets = messages.what.bullets;
+  const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
@@ -102,6 +104,8 @@ const What = forwardRef(function What({ children }, ref) {
   const pillsMobileWrapRef = useRef(null);
   const phoneRef = useRef(null);
   const orbitRef = useRef(null);
+  const capsuleDesktopRef = useRef(null);
+  const capsuleMobileRef = useRef(null);
   const pillRefs = useRef([]);
   pillRefs.current = [];
 
@@ -119,6 +123,8 @@ const What = forwardRef(function What({ children }, ref) {
       pillsDesktop: pillsWrapRef.current,
       pillsMobile: pillsMobileWrapRef.current,
       phone: phoneRef.current,
+      capsuleDesktop: capsuleDesktopRef.current,
+      capsuleMobile: capsuleMobileRef.current,
     }),
     [],
   );
@@ -128,22 +134,22 @@ const What = forwardRef(function What({ children }, ref) {
       ref={sectionRef}
       data-nav-theme="dark"
       id="what"
-      className="relative w-full min-h-dvh overflow-hidden flex justify-center flex-col p-6 md:p-10"
+      className="relative w-full h-dvh overflow-hidden flex justify-center flex-col p-6 md:p-10"
     >
       <div
         ref={cardRef}
-        className="w-full h-full bg-neutral-200 relative flex lg:flex-row flex-col lg:items-center justify-between flex-1 rounded-2xl md:rounded-3xl lg:rounded-[2.5rem] lg:p-10 lg:py-0 md:py-14 py-8 p-6"
+        className="w-full min-h-full md:h-full bg-neutral-200 relative flex lg:flex-row flex-col lg:items-center justify-between flex-1 gap-4 md:gap-0 rounded-2xl md:rounded-3xl lg:rounded-[2.5rem] lg:p-10 lg:py-0 md:py-14 py-8 p-6"
       >
         <h2
           ref={headingTopRef}
-          className="font-main font-medium relative md:-top-8 text-black text-left text-[clamp(1.8rem,5.6vw,2.25rem)] leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]"
+          className={`order-1 md:order-0 font-main font-medium relative md:-top-8 text-black text-left ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]`}
         >
           {messages.what.headingTop[0]}
           <br />
           {messages.what.headingTop[1]}
         </h2>
 
-        <div className="absolute left-1/2 top-1/2 -translate-1/2 md:w-fit w-full flex items-center justify-center">
+        <div className="order-3 md:order-0 md:absolute md:left-1/2 md:top-1/2 md:-translate-1/2 w-full md:w-fit flex items-center justify-center">
           {/* Desktop / tablet */}
           <div className="hidden md:flex md:items-center md:justify-center">
             {shouldReduceMotion ? (
@@ -181,6 +187,7 @@ const What = forwardRef(function What({ children }, ref) {
                   src="/capsule.webp"
                   alt={messages.what.capsuleAlt}
                   width={0}
+                  ref={capsuleDesktopRef}
                   height={0}
                   sizes="(min-width: 768px) 280px, 224px"
                   draggable={false}
@@ -206,16 +213,17 @@ const What = forwardRef(function What({ children }, ref) {
             )}
           </div>
 
-          <div className="relative flex w-56 flex-col items-center md:hidden">
+          <div className="flex w-full max-w-70 flex-col items-center gap-5 md:hidden">
             <Image
               src="/capsule.webp"
               alt={messages.what.capsuleAlt}
               width={0}
+              ref={capsuleMobileRef}
               height={0}
               sizes="(min-width: 768px) 280px, 224px"
               draggable={false}
               loading="lazy"
-              className="h-auto w-56 select-none object-contain"
+              className="h-auto w-[clamp(8rem,min(45vw,34dvh),14rem)] select-none object-contain"
             />
             <motion.div
               ref={pillsMobileWrapRef}
@@ -223,7 +231,7 @@ const What = forwardRef(function What({ children }, ref) {
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
               variants={FADE_UP_CONTAINER}
-              className="absolute left-1/2 top-full mt-6 flex w-70 max-w-[85vw] -translate-x-1/2 flex-wrap items-center justify-center gap-2.5"
+              className="flex w-full max-w-70 flex-wrap items-center justify-center gap-2 sm:gap-2.5"
             >
               {bullets.map((bullet) => (
                 <motion.span
@@ -240,14 +248,14 @@ const What = forwardRef(function What({ children }, ref) {
 
         <p
           ref={subtitleRef}
-          className="absolute md:w-fit h-fit w-full text-center font-second left-1/2 lg:bottom-[12.5%] bottom-[18.5%] md:top-auto top-[32%] text-black/60 md:text-base text-sm tracking-wide -translate-x-1/2"
+          className="order-2 md:order-0 h-fit w-full md:w-fit text-center font-second md:absolute md:left-1/2 md:bottom-[18.5%] lg:bottom-[12.5%] md:-translate-x-1/2 text-black/60 md:text-base text-sm tracking-wide"
         >
           {messages.what.subtitle}
         </p>
 
         <h2
           ref={headingBottomRef}
-          className="font-main font-medium text-black relative md:-bottom-8 text-right text-[clamp(1.8rem,5.6vw,2.25rem)] leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]"
+          className={`order-4 md:order-0 font-main font-medium text-black relative md:-bottom-8 text-right ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]`}
         >
           {messages.what.headingBottom[0]}
           <br />

@@ -11,10 +11,12 @@ import { BUTTON_RADIUS, BUTTON_SPAN_SIZES } from "@/constants/styles";
 import useConsent from "@/hooks/useConsent";
 import { trackEvent } from "@/lib/analytics";
 import { useI18n } from "@/i18n/I18nProvider";
+import { usePathname } from "next/navigation";
 
 const Header = ({ setModalState }) => {
   const { messages } = useI18n();
   const lenis = useLenis();
+  const pathname = usePathname();
   const sectionRef = useRef(null);
 
   const { consent } = useConsent();
@@ -34,7 +36,7 @@ const Header = ({ setModalState }) => {
     <section
       ref={sectionRef}
       data-nav-theme="light"
-      className="relative w-full h-dvh rounded-b-none overflow-hidden @container"
+      className="relative w-full h-[calc(100dvh+2px)] rounded-b-none overflow-hidden @container"
     >
       <BackgroundPicture mobileSrc="/bg-mobile.jpg" desktopSrc="/bg.jpg">
         <CalloutTag
@@ -58,7 +60,7 @@ const Header = ({ setModalState }) => {
       {/* Content layer */}
       <div className="w-full h-full relative z-auto md:p-10 p-6 flex flex-col justify-end items-center">
         <div className="w-full h-fit flex md:flex-row flex-col md:items-end justify-between gap-6 md:mb-4 mb-6">
-          <h1 className="font-main 2xl:text-5xl lg:text-4xl md:text-2xl text-2xl-fluid font-medium leading-[125%] select-none">
+          <h1 className={`font-main 2xl:text-5xl lg:text-4xl md:text-2xl ${pathname.includes("/ua") ? "text-2xl-fluid-ua" : pathname.includes("/ru") || pathname.includes("/pl") ? "text-2xl-fluid-plru" : "text-2xl-fluid"} font-medium leading-[125%] select-none`}>
             {messages.header.heading}
             <br />
             {messages.header.headingJoiner}{" "}

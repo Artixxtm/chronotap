@@ -23,13 +23,13 @@ export default function About() {
       >
         <motion.p
           variants={FADE_UP_ITEM}
-          className="font-second text-base md:text-lg xl:text-xl tracking-wide text-black/80"
+          className="font-second max-[360px]:text-xs text-base md:text-lg xl:text-xl tracking-wide text-black/80"
         >
           {messages.why.eyebrow}
         </motion.p>
         <motion.h2
           variants={FADE_UP_CONTAINER}
-          className="font-main font-medium text-black text-[clamp(1.5rem,5.6vw,2.25rem)] leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]"
+          className="font-main font-medium text-black max-[360px]:text-[clamp(1.25rem,4vw,2.25rem)] text-[clamp(1.5rem,5.6vw,2.25rem)] leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]"
         >
           {messages.why.lines.map((line, i) => (
             <motion.span

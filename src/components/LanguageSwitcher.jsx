@@ -13,7 +13,7 @@ export default function LanguageSwitcher({ className, onSelect }) {
   return (
     <nav
       aria-label={messages.common.languageSwitcher}
-      className={cn("flex items-center gap-1 font-main text-xs", className)}
+      className={cn("flex items-center gap-1 font-main max-[360px]:text-[10px] text-xs", className)}
     >
       {LOCALES.map((item) => {
         const active = item === locale;

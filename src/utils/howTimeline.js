@@ -13,7 +13,10 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
     pillsDesktop,
     pillsMobile,
     phone,
+    capsuleDesktop,
+    capsuleMobile,
   } = whatHandle;
+
   const { scrollDown, ring, counter, steps } = overlayHandle;
   const cfg = HOW_ANIMATION;
   const seg = cfg.segmentScrollVh;
@@ -23,14 +26,29 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
 
   if (!section || !card || !steps?.length) return null;
 
+  const capsuleEl =
+    capsuleDesktop && capsuleDesktop.getBoundingClientRect().width > 0
+      ? capsuleDesktop
+      : capsuleMobile;
+
   const vh = (value) => (value / 100) * document.documentElement.clientHeight;
+
+  const dockOffsetPx = (() => {
+    if (!capsuleEl) return cfg.phone.dockOffsetPx;
+    const sectionRect = section.getBoundingClientRect();
+    const capsuleRect = capsuleEl.getBoundingClientRect();
+    const capsuleCenterY =
+      capsuleRect.top + capsuleRect.height / 2 - sectionRect.top;
+    return capsuleCenterY - sectionRect.height / 2;
+  })();
 
   gsap.set([headingTop, headingBottom, subtitle], {
     opacity: 1,
     y: 0,
     filter: blurOut,
   });
-  gsap.set(subtitle, { xPercent: -50, x: 0 });
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  gsap.set(subtitle, { xPercent: isDesktop ? -50 : 0, x: 0 });
   gsap.set(pills, { opacity: 1 });
   gsap.set(scrollDown, { opacity: 0, y: -10, filter: blurIn });
   gsap.set(steps, { opacity: 0, y: cfg.text.fadeDistance, filter: blurIn });
@@ -150,7 +168,7 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
   const pulseDuration = seg.dock * cfg.pulse.durationFraction;
 
   tl.to(phone, {
-    y: cfg.phone.dockOffsetPx,
+    y: dockOffsetPx,
     rotate: 0,
     duration: seg.dock,
     ease: cfg.ease.dock,

@@ -1,4 +1,5 @@
 import PrivacyPage from "@/app/_pages/PrivacyPage";
+import PageJsonLd from "@/components/PageJsonLd";
 import { getDictionary } from "@/i18n/dictionaries";
 import { createMetadata } from "@/i18n/metadata";
 
@@ -10,6 +11,18 @@ export async function generateMetadata() {
   });
 }
 
-export default function Privacy() {
-  return <PrivacyPage locale="en" />;
+export default async function Privacy() {
+  const messages = await getDictionary("en");
+
+  return (
+    <>
+      <PageJsonLd
+        locale="en"
+        pathname="/privacy"
+        name={messages.meta.privacyTitle}
+        description={messages.meta.privacyDescription}
+      />
+      <PrivacyPage locale="en" />
+    </>
+  );
 }

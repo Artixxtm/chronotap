@@ -41,6 +41,7 @@ const en = {
       why: "Why",
       what: "What",
       how: "How",
+      faq: "Faq",
       waitlist: "Waitlist",
       shop: "Shop",
     },

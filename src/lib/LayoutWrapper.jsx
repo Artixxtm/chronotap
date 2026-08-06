@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { ReactLenis } from "lenis/react";
 import { gsap, ScrollTrigger } from "@/utils/gsap";
 import { setScrollNormalizer } from "@/lib/scrollNormalizer";
@@ -12,7 +12,44 @@ import "lenis/dist/lenis.css";
 export default function LayoutWrapper({ children }) {
   const lenisRef = useRef(null);
   const pathname = usePathname();
-  const hideMenu = /^\/(?:(?:ua|ru|pl)\/)?(?:privacy|shop)$/.test(pathname);
+  const hideMenu = /^\/(?:(?:ua|ru|pl)\/)?(?:privacy|shop|faq)$/.test(pathname);
+
+  useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    let secondFrame = 0;
+
+    const resetScroll = () => {
+      const lenis = lenisRef.current?.lenis;
+      lenis?.resize();
+      lenis?.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+
+    const firstFrame = requestAnimationFrame(() => {
+      resetScroll();
+      secondFrame = requestAnimationFrame(() => {
+        resetScroll();
+        ScrollTrigger.refresh();
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     function update(time) {

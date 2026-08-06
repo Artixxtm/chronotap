@@ -4,6 +4,7 @@ const SITE_URL = "https://chronotap.co";
 
 const ROUTES = [
   { pathname: "/", changeFrequency: "weekly", priority: 1 },
+  { pathname: "/faq", changeFrequency: "monthly", priority: 0.8 },
   { pathname: "/shop", changeFrequency: "weekly", priority: 0.7 },
   { pathname: "/privacy", changeFrequency: "yearly", priority: 0.3 },
 ];

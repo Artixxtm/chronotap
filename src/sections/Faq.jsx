@@ -40,7 +40,7 @@ export default function Faq() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.08, ease: EASE }}
-                className="mt-1 w-fit font-main text-[clamp(1.5rem,5.6vw,2.25rem)] font-medium leading-[135%] max-[360px]:text-[clamp(1.25rem,4vw,2.25rem)] md:text-3xl md:leading-[130%] lg:text-4xl 2xl:text-5xl"
+                className="mt-1 w-fit font-main text-[clamp(1.5rem,5.6vw,2.25rem)] md:text-left text-center font-medium leading-[135%] max-[360px]:text-[clamp(1.25rem,4vw,2.25rem)] md:text-3xl md:leading-[130%] lg:text-4xl 2xl:text-5xl"
               >
                 {copy.section.heading}
               </motion.h2>

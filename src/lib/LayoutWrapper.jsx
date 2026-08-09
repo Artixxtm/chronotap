@@ -12,7 +12,7 @@ import "lenis/dist/lenis.css";
 export default function LayoutWrapper({ children }) {
   const lenisRef = useRef(null);
   const pathname = usePathname();
-  const hideMenu = /^\/(?:(?:ua|ru|pl)\/)?(?:privacy|shop|faq)$/.test(pathname);
+  const hideMenu = /^\/(?:(?:ua|ru|pl)\/)?(?:privacy|shop|faq|press)$/.test(pathname);
 
   useEffect(() => {
     const previousScrollRestoration = window.history.scrollRestoration;

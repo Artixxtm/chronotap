@@ -17,9 +17,17 @@ const en = {
   heroText:
     "Essential information, approved visuals and source material for journalists, publishers, creators and event organisers.",
   updated: "Updated August 2026",
+  officialProductWebsite: "Official product website",
   shortVersion: "The short version",
   tagline: "A physical place for digital memories.",
   downloadKit: "Download press kit",
+  demo: {
+    eyebrow: "Product demo",
+    heading: ["See ChronoTap", "in action."],
+    description:
+      "A two-minute walkthrough of the physical capsule and the digital experience behind it.",
+    cta: "Watch the demo",
+  },
   documents: {
     eyebrow: "01 / DOCUMENTS",
     heading: "Ready to quote.",
@@ -142,9 +150,17 @@ const ru = {
   heroText:
     "Основная информация, одобренные изображения и исходные материалы для журналистов, издателей, авторов и организаторов мероприятий.",
   updated: "Обновлено в августе 2026",
+  officialProductWebsite: "Официальный сайт продукта",
   shortVersion: "Коротко",
   tagline: "Физическое место для цифровых воспоминаний.",
   downloadKit: "Скачать медиакит",
+  demo: {
+    eyebrow: "Демо продукта",
+    heading: ["Посмотрите ChronoTap", "в действии."],
+    description:
+      "Двухминутный обзор физической капсулы и связанного с ней цифрового опыта.",
+    cta: "Смотреть демо",
+  },
   documents: {
     eyebrow: "01 / ДОКУМЕНТЫ",
     heading: "Готово к публикации.",
@@ -190,7 +206,7 @@ const ru = {
   },
   assets: {
     eyebrow: "03 / ВИЗУАЛЬНЫЕ МАТЕРИАЛЫ",
-    heading: ["Материалы,", "подписанные точно."],
+    heading: ["Визуалы", "с понятными подписями."],
     intro:
       "Оригинальные фотографии, рендеры и вспомогательные бренд-материалы разделены, чтобы каждый файл можно было описывать корректно.",
     realHeading: "Реальные фотографии",
@@ -266,9 +282,17 @@ const ua = {
   heroText:
     "Основна інформація, схвалені візуальні матеріали та джерела для журналістів, видавців, авторів і організаторів подій.",
   updated: "Оновлено в серпні 2026",
+  officialProductWebsite: "Офіційний сайт продукту",
   shortVersion: "Коротко",
   tagline: "Фізичне місце для цифрових спогадів.",
   downloadKit: "Завантажити медіакіт",
+  demo: {
+    eyebrow: "Демо продукту",
+    heading: ["Побачте ChronoTap", "у дії."],
+    description:
+      "Двохвилинний огляд фізичної капсули та пов’язаного з нею цифрового досвіду.",
+    cta: "Дивитися демо",
+  },
   documents: {
     eyebrow: "01 / ДОКУМЕНТИ",
     heading: "Готово до цитування.",
@@ -314,7 +338,7 @@ const ua = {
   },
   assets: {
     eyebrow: "03 / ВІЗУАЛЬНІ МАТЕРІАЛИ",
-    heading: ["Матеріали,", "підписані точно."],
+    heading: ["Візуали", "з чіткими підписами."],
     intro:
       "Оригінальні фотографії, рендери та допоміжні бренд-матеріали розділено, щоб кожен файл можна було описувати коректно.",
     realHeading: "Реальні фотографії",
@@ -390,9 +414,17 @@ const pl = {
   heroText:
     "Najważniejsze informacje, zatwierdzone materiały wizualne i źródła dla dziennikarzy, wydawców, twórców oraz organizatorów wydarzeń.",
   updated: "Aktualizacja: sierpień 2026",
+  officialProductWebsite: "Oficjalna strona produktu",
   shortVersion: "W skrócie",
   tagline: "Fizyczne miejsce dla cyfrowych wspomnień.",
   downloadKit: "Pobierz materiały prasowe",
+  demo: {
+    eyebrow: "Demo produktu",
+    heading: ["Zobacz ChronoTap", "w działaniu."],
+    description:
+      "Dwuminutowa prezentacja fizycznej kapsuły i powiązanego z nią cyfrowego doświadczenia.",
+    cta: "Obejrzyj demo",
+  },
   documents: {
     eyebrow: "01 / DOKUMENTY",
     heading: "Gotowe do cytowania.",
@@ -438,7 +470,7 @@ const pl = {
   },
   assets: {
     eyebrow: "03 / MATERIAŁY WIZUALNE",
-    heading: ["Materiały,", "opisane precyzyjnie."],
+    heading: ["Wizualia", "z jasnymi opisami."],
     intro:
       "Oryginalne fotografie, rendery oraz dodatkowe materiały marki są rozdzielone, aby każdy plik można było opisać poprawnie.",
     realHeading: "Prawdziwe fotografie",

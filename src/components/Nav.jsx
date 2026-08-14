@@ -39,14 +39,16 @@ function getNavEdge(vw) {
   return vw >= 768 ? 40 : 24;
 }
 
-function getClosedSize(vw) {
+function getClosedSize(vw, vh) {
+  if (vw >= 768 && vh <= 700) return { width: 148, height: 54 };
   if (vw >= 1536) return { width: 168.56, height: 88 };
   if (vw >= 1024) return { width: 157.81, height: 76 };
   if (vw >= 768) return { width: 152.42, height: 54 };
   return { width: 64, height: 42 };
 }
 
-function getRadius(vw) {
+function getRadius(vw, vh) {
+  if (vw >= 768 && vh <= 700) return { closed: 24, open: 32 };
   if (vw >= 1024) return { closed: 32, open: 40 };
   if (vw >= 768) return { closed: 24, open: 32 };
   return { closed: 16, open: 24 };
@@ -77,8 +79,8 @@ const Nav = () => {
   const toggle = () => setIsOpen((prev) => !prev);
 
   const navEdge = getNavEdge(vw);
-  const closedSize = getClosedSize(vw);
-  const radius = getRadius(vw);
+  const closedSize = getClosedSize(vw, vh);
+  const radius = getRadius(vw, vh);
   const isDark = sectionTheme === "dark";
   const shadowAlphaOpen = isDark ? 0.45 : 0.25;
 
@@ -156,7 +158,7 @@ const Nav = () => {
         aria-expanded={isOpen}
         onClick={toggle}
         className={cn(
-          "fixed z-50 uppercase font-main font-medium flex items-center gap-3",
+          "nav-trigger fixed z-50 uppercase font-main font-medium flex items-center gap-3",
           "top-(--nav-edge) right-(--nav-edge)",
           "text-lg py-3.25 px-5 md:px-8.5",
           "lg:text-xl lg:py-6",

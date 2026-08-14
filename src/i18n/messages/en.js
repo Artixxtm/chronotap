@@ -30,6 +30,11 @@ const en = {
     copyright: "© 2026 ChronoTap™",
     languageSwitcher: "Choose language",
   },
+  featuredIn: {
+    heading: "Featured in",
+    others: "and others...",
+    linkLabel: "Read about ChronoTap on dev.ua",
+  },
   nav: {
     ariaLabel: "Main navigation",
     openMenu: "Open menu",

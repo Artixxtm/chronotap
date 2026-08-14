@@ -33,12 +33,14 @@ export const HOW_INDEXED_TOTAL = HOW_STEPS.filter(
  
 export const HOW_ANIMATION = {
   segmentScrollVh: {
-    hold: 30,
-    settle: 90,
-    dock: 80,
-    step: 140,
-    release: 60,
+    hold: 8,
+    settle: 45,
+    dock: 45,
+    step: 65,
+    release: 32,
   },
+
+  mobileScrollScale: 0.78,
  
   ease: {
     settle: "power2.out",

@@ -58,9 +58,9 @@ const Header = ({ setModalState }) => {
       <div className="idk" aria-hidden="true" />
 
       {/* Content layer */}
-      <div className="w-full h-full relative z-auto md:p-10 p-6 flex flex-col justify-end items-center">
-        <div className="w-full h-fit flex md:flex-row flex-col md:items-end justify-between gap-6 md:mb-4 mb-6">
-          <h1 className={`font-main 2xl:text-5xl lg:text-4xl md:text-2xl ${pathname.includes("/ua") ? "text-2xl-fluid-ua" : pathname.includes("/ru") || pathname.includes("/pl") ? "text-2xl-fluid-plru" : "text-2xl-fluid"} font-medium leading-[125%] select-none`}>
+      <div className="hero-content w-full h-full relative z-auto md:p-10 p-6 flex flex-col justify-end items-center">
+        <div className="hero-bottom-row w-full h-fit flex md:flex-row flex-col md:items-end justify-between gap-6 md:mb-4 mb-6">
+          <h1 className={`hero-heading font-main 2xl:text-5xl lg:text-4xl md:text-2xl ${pathname.includes("/ua") ? "text-2xl-fluid-ua" : pathname.includes("/ru") || pathname.includes("/pl") ? "text-2xl-fluid-plru" : "text-2xl-fluid"} font-medium leading-[125%] select-none`}>
             {messages.header.heading}
             <br />
             {messages.header.headingJoiner}{" "}
@@ -69,12 +69,12 @@ const Header = ({ setModalState }) => {
             </span>
           </h1>
 
-          <div className="md:w-fit w-full flex items-center md:flex-row flex-col 2xl:gap-8.5 lg:gap-6 gap-2 relative lg:mb-2">
+          <div className="hero-actions md:w-fit w-full flex items-center md:flex-row flex-col 2xl:gap-8.5 lg:gap-6 gap-2 relative lg:mb-2">
             <Button
               variant="primary"
               onClick={handleWaitlistClick}
               fullWidthOnMobile
-              className="relative"
+              className="hero-cta relative"
             >
               <div
                 className={`${BUTTON_SPAN_SIZES} ${BUTTON_RADIUS} span-container after:rounded-2xl after:md:rounded-3xl after:lg:rounded-4xl`}
@@ -93,7 +93,7 @@ const Header = ({ setModalState }) => {
               variant="secondary"
               onClick={() => lenis?.scrollTo("#why")}
               fullWidthOnMobile
-              className="relative"
+              className="hero-cta relative"
             >
               <span>{messages.header.discoverMore}</span>
               <div

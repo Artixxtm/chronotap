@@ -46,7 +46,7 @@ export default async function SiteDocument({ children, locale }) {
           <LayoutWrapper>{children}</LayoutWrapper>
           <AnalyticsConsent />
         </I18nProvider>
-        <JsonLd />
+        <JsonLd locale={locale} productDescription={meta.description} />
       </body>
     </html>
   );

@@ -7,6 +7,8 @@ export default function PageJsonLd({
   pathname,
   name,
   description,
+  productIsMainEntity = false,
+  aboutProduct = false,
 }) {
   const url = `${SITE_URL}${localizedPath(locale, pathname)}`;
   const schema = {
@@ -20,6 +22,14 @@ export default function PageJsonLd({
     isPartOf: { "@id": `${SITE_URL}/#website` },
     publisher: { "@id": `${SITE_URL}/#organization` },
   };
+
+  if (productIsMainEntity) {
+    schema.mainEntity = { "@id": `${SITE_URL}/#product` };
+  }
+
+  if (aboutProduct) {
+    schema.about = { "@id": `${SITE_URL}/#product` };
+  }
 
   return (
     <script

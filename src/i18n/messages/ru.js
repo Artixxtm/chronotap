@@ -29,6 +29,11 @@ const ru = {
     copyright: "© 2026 ChronoTap™",
     languageSwitcher: "Выбрать язык",
   },
+  featuredIn: {
+    heading: "О нас пишут",
+    others: "и другие...",
+    linkLabel: "Прочитать о ChronoTap на dev.ua",
+  },
   nav: {
     ariaLabel: "Главная навигация",
     openMenu: "Открыть меню",

@@ -142,7 +142,7 @@ const What = forwardRef(function What({ children }, ref) {
       >
         <h2
           ref={headingTopRef}
-          className={`order-1 md:order-0 font-main font-medium relative md:-top-8 text-black text-left ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]`}
+          className={`order-1 md:order-0 font-main font-medium relative md:-top-8 text-black text-left ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-[clamp(1.75rem,6dvh,2.25rem)] 2xl:text-5xl md:leading-[130%]`}
         >
           {messages.what.headingTop[0]}
           <br />
@@ -179,8 +179,8 @@ const What = forwardRef(function What({ children }, ref) {
                 ref={orbitRef}
                 className="relative flex items-center justify-center"
                 style={{
-                  width: "clamp(300px, 32vw, 460px)",
-                  height: "clamp(300px, 32vw, 460px)",
+                  width: "clamp(260px, min(32vw, 58dvh), 460px)",
+                  height: "clamp(260px, min(32vw, 58dvh), 460px)",
                 }}
               >
                 <Image
@@ -193,7 +193,9 @@ const What = forwardRef(function What({ children }, ref) {
                   draggable={false}
                   loading="lazy"
                   className="relative z-10 h-auto select-none object-contain"
-                  style={{ width: "clamp(160px, 23vw, 280px)" }}
+                  style={{
+                    width: "clamp(150px, min(23vw, 38dvh), 280px)",
+                  }}
                 />
 
                 <div ref={pillsWrapRef} className="absolute inset-0">
@@ -255,7 +257,7 @@ const What = forwardRef(function What({ children }, ref) {
 
         <h2
           ref={headingBottomRef}
-          className={`order-4 md:order-0 font-main font-medium text-black relative md:-bottom-8 text-right ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-4xl 2xl:text-5xl md:leading-[130%]`}
+          className={`order-4 md:order-0 font-main font-medium text-black relative md:-bottom-8 text-right ${pathname.includes("/ua") ? "max-[360px]:text-[clamp(1rem,5.2vw,2.25rem)] text-[clamp(1.5rem,5.45vw,2.25rem)]" : pathname.includes("/ru") || pathname.includes("/pl") ? "max-[360px]:text-[clamp(1rem,5.3vw,2.25rem)] text-[clamp(1.3rem,5.4vw,2.25rem)]" : "max-[360px]:text-[clamp(1.35rem,5.6vw,2.25rem)] text-[clamp(1.8rem,5.6vw,2.25rem)]"} leading-[135%] md:text-3xl lg:text-[clamp(1.75rem,6dvh,2.25rem)] 2xl:text-5xl md:leading-[130%]`}
         >
           {messages.what.headingBottom[0]}
           <br />
@@ -273,7 +275,7 @@ const What = forwardRef(function What({ children }, ref) {
         height={0}
         sizes="100vw"
         draggable={false}
-        className="absolute -bottom-[27%] left-1/2 h-auto w-[min(62vw,300px)] -translate-x-1/2 select-none object-contain md:w-[clamp(160px,25vw,350px)] customDropShadow"
+        className="absolute -bottom-[27%] left-1/2 h-auto w-[min(62vw,300px)] -translate-x-1/2 select-none object-contain md:w-[clamp(140px,min(25vw,42dvh),350px)] customDropShadow"
       />
 
       <div className="absolute w-full md:h-12 h-8 bg-linear-0 from-white from-15% z-4 to-transparent bottom-0 left-0 pointer-events-none" />

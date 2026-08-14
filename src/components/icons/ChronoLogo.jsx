@@ -9,8 +9,8 @@ const C_PATH =
 const T_PATH =
   "M 2357.248 92.252 L 2265 184.504 2265 723.752 L 2265 1263 1224.204 1263 L 183.408 1263 91.704 1355.656 L 0 1448.312 0.046 1599.406 L 0.093 1750.500 94.296 1842.237 L 188.500 1933.975 355.500 1934.032 C 492.056 1934.080, 2263.911 1937.697, 2264.750 1937.930 C 2264.887 1937.969, 2265 2181.338, 2265 2478.752 L 2265 3019.504 2361.752 3116.252 L 2458.504 3213 2697.171 3213 L 2935.838 3213 2936.169 2405.750 C 2936.351 1961.763, 2936.351 1238.838, 2936.169 799.250 L 2935.837 0 2692.667 0 L 2449.496 0 2357.248 92.252 M 0.487 1599.500 C 0.487 1683.100, 0.605 1717.152, 0.750 1675.171 C 0.894 1633.191, 0.894 1564.791, 0.750 1523.171 C 0.605 1481.552, 0.487 1515.900, 0.487 1599.500";
 
-const LINE_H = "md:h-[7cqw] h-[max(1.85rem,8.5cqw)]";
-const WORDMARK_TEXT = `font-main font-semibold leading-[100%] ${LINE_H} md:text-[7cqw] text-[max(1.85rem,8.5cqw)] relative md:top-px whitespace-nowrap select-none [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]`;
+const LINE_H = "md:h-[min(7cqw,13dvh)] h-[max(1.85rem,8.5cqw)]";
+const WORDMARK_TEXT = `font-main font-semibold leading-[100%] ${LINE_H} md:text-[min(7cqw,13dvh)] text-[max(1.85rem,8.5cqw)] relative md:top-px whitespace-nowrap select-none [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]`;
 
 const ChronoLogo = ({ isOpen = false, color = "#ffffff" }) => {
   const wrapperRef = useRef(null);
@@ -48,7 +48,7 @@ const ChronoLogo = ({ isOpen = false, color = "#ffffff" }) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 2938 3213"
         preserveAspectRatio="xMidYMin meet"
-        className={`md:w-[4.5cqw] w-[5.48cqw] ${LINE_H} shrink-0 relative z-10`}
+        className={`md:w-[min(4.5cqw,8.36dvh)] w-[5.48cqw] ${LINE_H} shrink-0 relative z-10`}
         aria-hidden="true"
       >
         <path d={C_PATH} fill="currentColor" fillRule="evenodd" stroke="none" />
@@ -65,14 +65,14 @@ const ChronoLogo = ({ isOpen = false, color = "#ffffff" }) => {
       </div>
 
       <div
-        className={`${LINE_H} shrink-0 relative z-10 overflow-visible flex items-center justify-center md:w-[4.95cqw] w-[6.03cqw]`}
+        className={`${LINE_H} shrink-0 relative z-10 overflow-visible flex items-center justify-center md:w-[min(4.95cqw,9.19dvh)] w-[6.03cqw]`}
       >
         <svg
           ref={tSvgRef}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 2936 3213"
           preserveAspectRatio="xMidYMid meet"
-          className="h-full block md:w-[4.95cqw] w-[6.03cqw]"
+          className="h-full block md:w-[min(4.95cqw,9.19dvh)] w-[6.03cqw]"
           style={{
             transform: "rotate(-90deg)",
             transformOrigin: "center center",
@@ -100,7 +100,7 @@ const ChronoLogo = ({ isOpen = false, color = "#ffffff" }) => {
 
       <span
         ref={tmRef}
-        className={`font-main font-normal ${LINE_H} leading-[100%] md:text-[7cqw] text-[8.25cqw] relative z-10 md:top-px shrink-0 select-none [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]`}
+        className={`font-main font-normal ${LINE_H} leading-[100%] md:text-[min(7cqw,13dvh)] text-[8.25cqw] relative z-10 md:top-px shrink-0 select-none [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]`}
         aria-hidden="true"
       >
         ™

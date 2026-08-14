@@ -29,6 +29,7 @@ export default async function PressPage({ params }) {
         pathname="/press"
         name={`${copy.meta.title} — ChronoTap`}
         description={copy.meta.description}
+        aboutProduct
       />
       <PressClient />
     </>

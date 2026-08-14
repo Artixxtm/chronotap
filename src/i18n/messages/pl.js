@@ -29,6 +29,11 @@ const pl = {
     copyright: "© 2026 ChronoTap™",
     languageSwitcher: "Wybierz język",
   },
+  featuredIn: {
+    heading: "Pisali o nas",
+    others: "i inni...",
+    linkLabel: "Przeczytaj o ChronoTap na dev.ua",
+  },
   nav: {
     ariaLabel: "Główna nawigacja",
     openMenu: "Otwórz menu",

@@ -18,7 +18,7 @@ const BackgroundPicture = ({
         fetchPriority="high"
         loading="eager"
         decoding="sync"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="hero-background-image absolute inset-0 w-full h-full object-cover"
       />
     </picture>
 

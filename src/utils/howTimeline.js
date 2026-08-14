@@ -48,6 +48,8 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
     filter: blurOut,
   });
   const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  const scrollDistanceVh =
+    HOW_TOTAL_SCROLL_VH * (isDesktop ? 1 : cfg.mobileScrollScale);
   gsap.set(subtitle, { xPercent: isDesktop ? -50 : 0, x: 0 });
   gsap.set(pills, { opacity: 1 });
   gsap.set(scrollDown, { opacity: 0, y: -10, filter: blurIn });
@@ -72,7 +74,7 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
       id: "how",
       trigger: section,
       start: cfg.pinStart,
-      end: () => "+=" + vh(HOW_TOTAL_SCROLL_VH),
+      end: () => "+=" + vh(scrollDistanceVh),
       pin: section,
       scrub: cfg.scrub,
       anticipatePin: 1,

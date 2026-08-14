@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { FiDownload } from "react-icons/fi";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
 import { localizedPath } from "@/i18n/config";
 import { getPressCopy } from "@/i18n/press";
+import { getDevUaArticleUrl } from "@/constants/featured";
 
 const REAL_PHOTOS = [
   {
@@ -81,14 +83,13 @@ const SUPPORTING_ASSETS = [
   },
 ];
 
-function DownloadArrow() {
-  return <span aria-hidden="true">↘</span>;
-}
-
 export default function PressClient() {
   const { locale, messages } = useI18n();
   const copy = getPressCopy(locale);
   const documentBase = `/press/${locale}`;
+  const officialProductPath = localizedPath(locale);
+  const officialProductUrl = `chronotap.co${officialProductPath}`;
+  const featuredArticleUrl = getDevUaArticleUrl(locale);
   const assetGroups = [
     {
       key: "real",
@@ -126,7 +127,7 @@ export default function PressClient() {
       </span>
       <LanguageSwitcher className="absolute right-6 top-14 z-20 md:right-10 md:top-16" />
 
-      <header className="relative mx-auto flex min-h-[88svh] w-full max-w-375 flex-col justify-end px-6 pb-16 pt-32 md:px-10 md:pb-24 lg:px-16">
+      <header className="relative mx-auto flex min-h-[88svh] w-full max-w-425 flex-col justify-end px-6 pb-16 pt-32 md:px-10 md:pb-24 lg:px-16">
         <div className="grid items-end gap-12 lg:grid-cols-[1.35fr_0.65fr] lg:gap-20">
           <div>
             <p className="font-main text-sm tracking-[0.08em] text-black/55 md:text-base">
@@ -151,12 +152,39 @@ export default function PressClient() {
                 {copy.email}
               </a>
             </div>
+            <div className="mt-8 flex flex-col items-start gap-4">
+              <a
+                href={featuredArticleUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Read about ChronoTap on dev.ua"
+                className="inline-flex items-center gap-4 rounded-full bg-[#f1f1ee] px-5 py-3 text-black transition-colors hover:bg-[#e5e5e1] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+              >
+                <span className="font-main text-[10px] uppercase tracking-[0.16em] text-black/50">
+                  Featured in
+                </span>
+                <span className="h-6 w-px bg-black/15" aria-hidden="true" />
+                <Image
+                  src="/featured/dev-ua-logo.svg"
+                  alt="dev.ua"
+                  width={596}
+                  height={168}
+                  className="h-6 w-auto"
+                />
+              </a>
+              <Link
+                href={officialProductPath}
+                className="font-main text-xs text-black/48 underline decoration-black/20 underline-offset-4 transition-colors hover:text-black hover:decoration-black"
+              >
+                {copy.officialProductWebsite} → {officialProductUrl}
+              </Link>
+            </div>
           </div>
         </div>
       </header>
 
-      <section className="border-y border-black/15 bg-[#0a0a0a] px-6 py-14 text-white md:px-10 md:py-20 lg:px-16">
-        <div className="mx-auto flex max-w-343.5 flex-col justify-between gap-10 md:flex-row md:items-end">
+      <section className="border-y border-black/15 bg-[#0a0a0a] text-white">
+        <div className="mx-auto flex w-full max-w-425 flex-col justify-between gap-10 px-6 py-14 md:flex-row md:items-end md:px-10 md:py-20 lg:px-16">
           <div>
             <p className="font-main text-xs uppercase tracking-[0.16em] text-white/40">
               {copy.shortVersion}
@@ -168,14 +196,15 @@ export default function PressClient() {
           <a
             href={`${documentBase}/chronotap-press-kit-${locale}.zip`}
             download
-            className="inline-flex w-fit shrink-0 items-center gap-3 rounded-full border border-white/25 px-6 py-3 font-main text-sm transition hover:border-white/60 hover:bg-white hover:text-black"
+            className="inline-flex min-h-12 w-fit shrink-0 items-center gap-3 rounded-full border border-white/30 px-6 py-3 font-main text-sm font-medium transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
-            {copy.downloadKit} <DownloadArrow />
+            {copy.downloadKit}
+            <FiDownload className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-375 px-6 py-24 md:px-10 md:py-36 lg:px-16">
+      <section className="mx-auto w-full max-w-425 px-6 py-24 md:px-10 md:py-36 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-[0.55fr_1.45fr] lg:gap-20">
           <div>
             <p className="font-main text-xs tracking-[0.16em] text-black/35">
@@ -208,9 +237,10 @@ export default function PressClient() {
                 <a
                   href={`${documentBase}/${document.file}`}
                   download
-                  className="mt-2 inline-flex h-fit w-fit items-center gap-2 font-main text-sm underline decoration-black/20 underline-offset-4 transition hover:decoration-black md:mt-1"
+                  className="mt-2 inline-flex h-11 w-fit shrink-0 self-start items-center gap-2.5 whitespace-nowrap rounded-full border border-black/20 bg-white px-4 font-main text-sm font-medium transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black md:mt-0 md:self-center md:justify-self-end"
                 >
-                  {copy.documents.download} <DownloadArrow />
+                  {copy.documents.download}
+                  <FiDownload className="h-4 w-4" aria-hidden="true" />
                 </a>
               </article>
             ))}
@@ -219,7 +249,61 @@ export default function PressClient() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-375 border-t border-black/15 px-6 py-24 md:px-10 md:py-36 lg:px-16">
+      <section
+        id="product-demo"
+        className="border-y border-black/15 bg-[#0a0a0a] text-white"
+      >
+        <a
+          href="/press/first-demo.mp4"
+          target="_blank"
+          rel="noreferrer"
+          className="group mx-auto grid w-full max-w-425 gap-10 px-6 py-14 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:grid-cols-[0.85fr_1.15fr] md:gap-12 md:px-10 md:py-20 lg:px-16"
+        >
+          <div className="flex flex-col justify-between gap-14 py-3 md:min-h-120 md:py-8 md:pr-4 lg:pr-8">
+            <div>
+              <p className="font-main text-xs uppercase tracking-[0.16em] text-white/40">
+                {copy.demo.eyebrow}
+              </p>
+              <h2 className="mt-5 font-main text-[clamp(2.5rem,5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]">
+                {copy.demo.heading[0]}
+                <br />
+                {copy.demo.heading[1]}
+              </h2>
+              <p className="mt-6 max-w-lg font-second text-base leading-relaxed tracking-wide text-white/55 md:text-lg">
+                {copy.demo.description}
+              </p>
+            </div>
+            <span className="inline-flex w-fit items-center gap-3 rounded-full bg-white px-5 py-3 font-main text-sm text-black transition-colors group-hover:bg-[#ddc7ff]">
+              <span aria-hidden="true">▶</span>
+              {copy.demo.cta}
+            </span>
+          </div>
+          <div className="relative min-h-72 overflow-hidden rounded-3xl md:min-h-120 md:rounded-[2.5rem]">
+            <Image
+              src="/press/product-demo-poster.jpg"
+              alt="ChronoTap product demo"
+              fill
+              sizes="(min-width: 768px) 58vw, 100vw"
+              className="object-cover transition-[filter] duration-300 group-hover:brightness-110"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10"
+              aria-hidden="true"
+            />
+            <span className="absolute right-5 top-5 rounded-full border border-white/25 bg-black/35 px-3 py-1.5 font-main text-xs tracking-[0.12em] backdrop-blur-sm md:right-7 md:top-7">
+              02:05
+            </span>
+            <span
+              className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-xl text-black shadow-xl transition-colors group-hover:bg-[#ddc7ff] md:h-20 md:w-20 md:text-2xl"
+              aria-hidden="true"
+            >
+              ▶
+            </span>
+          </div>
+        </a>
+      </section>
+
+      <section className="mx-auto w-full max-w-425 border-t border-black/15 px-6 py-24 md:px-10 md:py-36 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-[0.55fr_1.45fr] lg:gap-20">
           <div>
             <p className="font-main text-xs tracking-[0.16em] text-black/35">
@@ -249,9 +333,9 @@ export default function PressClient() {
 
       <section
         id="assets"
-        className="border-y border-black/15 bg-[#f5f5f3] px-6 py-24 md:px-10 md:py-36 lg:px-16"
+        className="border-y border-black/15 bg-[#f5f5f3]"
       >
-        <div className="mx-auto w-full max-w-343.5">
+        <div className="mx-auto w-full max-w-425 px-6 py-24 md:px-10 md:py-36 lg:px-16">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
               <p className="font-main text-xs tracking-[0.16em] text-black/35">
@@ -306,9 +390,9 @@ export default function PressClient() {
                             href={asset.href}
                             download
                             aria-label={`${copy.assets.downloadAria} ${title}`}
-                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/20 transition hover:border-black/60 hover:bg-black hover:text-white"
+                            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-black/20 bg-white transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                           >
-                            <DownloadArrow />
+                            <FiDownload className="h-5 w-5" aria-hidden="true" />
                           </a>
                         </div>
                       </article>
@@ -328,7 +412,7 @@ export default function PressClient() {
                 key={href}
                 href={href}
                 download
-                className="flex items-center justify-between rounded-2xl border border-black/15 bg-white p-6 transition hover:border-black/40 md:rounded-3xl md:p-8"
+                className="group flex items-center justify-between rounded-2xl border border-black/15 bg-white p-6 transition hover:border-black/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black md:rounded-3xl md:p-8"
               >
                 <span>
                   <span className="block font-main text-xl font-medium">
@@ -338,14 +422,16 @@ export default function PressClient() {
                     {format}
                   </span>
                 </span>
-                <DownloadArrow />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#f1f1ee] transition-colors group-hover:border-black group-hover:bg-black group-hover:text-white">
+                  <FiDownload className="h-5 w-5" aria-hidden="true" />
+                </span>
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-375 px-6 py-24 md:px-10 md:py-36 lg:px-16">
+      <section className="mx-auto w-full max-w-425 px-6 py-24 md:px-10 md:py-36 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-[0.55fr_1.45fr] lg:gap-20">
           <div>
             <p className="font-main text-xs tracking-[0.16em] text-black/35">
@@ -359,7 +445,16 @@ export default function PressClient() {
           </div>
           <div>
             {copy.links.items.map(([label, detail, href], index) => {
-              const external = href?.startsWith("http") || href?.includes('.mp4');
+              const isOfficialWebsite = index === 0;
+              const resolvedHref = isOfficialWebsite
+                ? officialProductPath
+                : href;
+              const resolvedDetail = isOfficialWebsite
+                ? officialProductUrl
+                : detail;
+              const external =
+                resolvedHref?.startsWith("http") ||
+                resolvedHref?.includes(".mp4");
               const content = (
                 <>
                   <span className="font-main text-xs tracking-[0.16em] text-black/30">
@@ -370,17 +465,19 @@ export default function PressClient() {
                       {label}
                     </span>
                     <span className="mt-1 block font-second text-sm tracking-wide text-black/42 md:text-base">
-                      {detail}
+                      {resolvedDetail}
                     </span>
                   </span>
-                  <span className="text-black/35">{href ? "↗" : "—"}</span>
+                  <span className="text-black/35">
+                    {resolvedHref ? "↗" : "—"}
+                  </span>
                 </>
               );
 
-              return href ? (
+              return resolvedHref ? (
                 <a
                   key={label}
-                  href={href}
+                  href={resolvedHref}
                   target={external ? "_blank" : undefined}
                   rel={external ? "noreferrer" : undefined}
                   className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-t border-black/18 py-6 transition hover:opacity-55 md:grid-cols-[3.5rem_1fr_auto] md:gap-6"
@@ -401,8 +498,8 @@ export default function PressClient() {
         </div>
       </section>
 
-      <section className="border-t border-black/15 px-6 py-24 md:px-10 md:py-36 lg:px-16">
-        <div className="mx-auto grid w-full max-w-343.5 gap-16 lg:grid-cols-2 lg:gap-28">
+      <section className="border-t border-black/15">
+        <div className="mx-auto grid w-full max-w-425 gap-16 px-6 py-24 md:px-10 md:py-36 lg:grid-cols-2 lg:gap-28 lg:px-16">
           <div>
             <p className="font-main text-xs tracking-[0.16em] text-black/35">
               {copy.usage.eyebrow}
@@ -438,7 +535,7 @@ export default function PressClient() {
         </div>
       </section>
 
-      <footer className="flex items-center justify-between px-6 pb-6 font-main text-xs uppercase tracking-[0.1em] text-black/30 md:px-10 md:pb-10 lg:px-16">
+      <footer className="mx-auto flex w-full max-w-425 items-center justify-between px-6 pb-6 font-main text-xs uppercase tracking-[0.1em] text-black/30 md:px-10 md:pb-10 lg:px-16">
         <span>ChronoTap™</span>
         <span>{copy.footer}</span>
       </footer>

@@ -13,6 +13,7 @@ export default async function Page() {
         pathname="/"
         name={messages.meta.title}
         description={messages.meta.description}
+        productIsMainEntity
       />
       <FaqJsonLd locale="en" featured />
       <HomePage />

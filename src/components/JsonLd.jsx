@@ -1,6 +1,9 @@
+import { localizedPath } from "@/i18n/config";
+
 const SITE_URL = "https://chronotap.co";
 
-export default function JsonLd() {
+export default function JsonLd({ locale, productDescription }) {
+  const productPageUrl = `${SITE_URL}${localizedPath(locale)}`;
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -27,6 +30,21 @@ export default function JsonLd() {
         name: "ChronoTap",
         publisher: { "@id": `${SITE_URL}/#organization` },
         inLanguage: ["en", "uk", "ru", "pl"],
+      },
+      {
+        "@type": "Product",
+        "@id": `${SITE_URL}/#product`,
+        name: "ChronoTap",
+        url: productPageUrl,
+        description: productDescription,
+        category: "Physical NFC time capsule for digital memories",
+        image: [
+          `${SITE_URL}/og-image.jpg`,
+          `${SITE_URL}/capsule.webp`,
+        ],
+        brand: { "@id": `${SITE_URL}/#organization` },
+        manufacturer: { "@id": `${SITE_URL}/#organization` },
+        mainEntityOfPage: { "@id": `${productPageUrl}#webpage` },
       },
     ],
   };

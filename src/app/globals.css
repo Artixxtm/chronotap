@@ -154,6 +154,74 @@ body {
   }
 }
 
+@media (min-width: 768px) and (max-height: 700px) {
+  .hero-background-image {
+    top: -25%;
+    bottom: auto;
+    height: 150%;
+  }
+
+  .hero-content {
+    padding: 1.5rem 2.5rem;
+  }
+
+  .hero-bottom-row {
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.5rem, 6.4dvh, 2.25rem) !important;
+    line-height: 1.15;
+  }
+
+  .hero-actions {
+    gap: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  .hero-cta {
+    border-radius: 1.5rem !important;
+    font-size: 1rem !important;
+  }
+
+  .hero-cta .span-container,
+  .hero-cta.secondaryBtn {
+    padding: 0.8rem 1.5rem !important;
+  }
+
+  .nav-trigger {
+    border-radius: 1.5rem !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+
+  .menu-panel {
+    padding-bottom: 1rem;
+  }
+
+  .menu-panel-links {
+    gap: 0.35rem;
+  }
+
+  .menu-panel-link {
+    font-size: clamp(1.5rem, 5.5dvh, 2rem) !important;
+  }
+
+  .menu-panel-featured {
+    margin-top: 0.5rem !important;
+    padding-block: 0.5rem !important;
+  }
+
+  .menu-panel-copy {
+    font-size: 0.875rem !important;
+  }
+
+  .menu-panel-media {
+    height: min(42dvh, 14rem) !important;
+  }
+}
+
 .customDropShadow {
   filter: drop-shadow(0px -5px 20px rgba(0, 0, 0, 0.3));
 }

@@ -29,6 +29,11 @@ const ua = {
     copyright: "© 2026 ChronoTap™",
     languageSwitcher: "Обрати мову",
   },
+  featuredIn: {
+    heading: "Про нас пишуть",
+    others: "та інші...",
+    linkLabel: "Прочитати про ChronoTap на dev.ua",
+  },
   nav: {
     ariaLabel: "Головна навігація",
     openMenu: "Відкрити меню",

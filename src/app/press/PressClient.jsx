@@ -7,7 +7,10 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
 import { localizedPath } from "@/i18n/config";
 import { getPressCopy } from "@/i18n/press";
-import { getDevUaArticleUrl } from "@/constants/featured";
+import {
+  getDevUaArticleUrl,
+  SHOTAM_ARTICLE_URL,
+} from "@/constants/featured";
 
 const REAL_PHOTOS = [
   {
@@ -153,25 +156,43 @@ export default function PressClient() {
               </a>
             </div>
             <div className="mt-8 flex flex-col items-start gap-4">
-              <a
-                href={featuredArticleUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Read about ChronoTap on dev.ua"
-                className="inline-flex items-center gap-4 rounded-full bg-[#f1f1ee] px-5 py-3 text-black transition-colors hover:bg-[#e5e5e1] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
-              >
+              <div className="inline-flex max-w-full items-center gap-3 rounded-full bg-[#f1f1ee] px-4 py-2 text-black sm:gap-4 sm:px-5 sm:py-3">
                 <span className="font-main text-[10px] uppercase tracking-[0.16em] text-black/50">
                   Featured in
                 </span>
                 <span className="h-6 w-px bg-black/15" aria-hidden="true" />
-                <Image
-                  src="/featured/dev-ua-logo.svg"
-                  alt="dev.ua"
-                  width={596}
-                  height={168}
-                  className="h-6 w-auto"
-                />
-              </a>
+                <a
+                  href={featuredArticleUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Read about ChronoTap on dev.ua"
+                  className="rounded-md transition-opacity duration-300 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-black"
+                >
+                  <Image
+                    src="/featured/dev-ua-logo.svg"
+                    alt="dev.ua"
+                    width={596}
+                    height={168}
+                    className="h-5 w-auto sm:h-6"
+                  />
+                </a>
+                <span className="h-6 w-px bg-black/15" aria-hidden="true" />
+                <a
+                  href={SHOTAM_ARTICLE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Read about ChronoTap on #ШОТАМ"
+                  className="rounded-lg transition-opacity duration-300 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-black"
+                >
+                  <Image
+                    src="/featured/shotam-logo.svg"
+                    alt="#ШОТАМ"
+                    width={411}
+                    height={414}
+                    className="h-8 w-auto sm:h-9"
+                  />
+                </a>
+              </div>
               <Link
                 href={officialProductPath}
                 className="font-main text-xs text-black/48 underline decoration-black/20 underline-offset-4 transition-colors hover:text-black hover:decoration-black"

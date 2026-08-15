@@ -34,6 +34,7 @@ const en = {
     heading: "Featured in",
     others: "and others...",
     linkLabel: "Read about ChronoTap on dev.ua",
+    shotamLinkLabel: "Read about ChronoTap on #ШОТАМ",
   },
   nav: {
     ariaLabel: "Main navigation",

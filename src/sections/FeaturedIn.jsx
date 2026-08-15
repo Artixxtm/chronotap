@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useI18n } from "@/i18n/I18nProvider";
-import { getDevUaArticleUrl } from "@/constants/featured";
+import {
+  getDevUaArticleUrl,
+  SHOTAM_ARTICLE_URL,
+} from "@/constants/featured";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -31,7 +34,7 @@ export default function FeaturedIn() {
           {messages.featuredIn.heading}
         </h2>
 
-        <div className="flex items-center justify-center gap-3 md:gap-5">
+        <div className="flex items-center justify-center gap-2.5 md:gap-5">
           <a
             href={getDevUaArticleUrl(locale)}
             target="_blank"
@@ -44,7 +47,22 @@ export default function FeaturedIn() {
               alt="dev.ua"
               width={596}
               height={168}
-              className="h-auto w-28 md:w-40 lg:w-44"
+              className="h-auto w-24 md:w-40 lg:w-44"
+            />
+          </a>
+          <a
+            href={SHOTAM_ARTICLE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={messages.featuredIn.shotamLinkLabel}
+            className="rounded-lg transition-opacity duration-300 hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+          >
+            <Image
+              src="/featured/shotam-logo.svg"
+              alt="#ШОТАМ"
+              width={411}
+              height={414}
+              className="h-10 w-auto md:h-14"
             />
           </a>
           <span className="whitespace-nowrap font-second text-xs tracking-wide text-black/45 md:text-base">

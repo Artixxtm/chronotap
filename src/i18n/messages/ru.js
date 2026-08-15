@@ -33,6 +33,7 @@ const ru = {
     heading: "О нас пишут",
     others: "и другие...",
     linkLabel: "Прочитать о ChronoTap на dev.ua",
+    shotamLinkLabel: "Прочитать о ChronoTap на #ШОТАМ",
   },
   nav: {
     ariaLabel: "Главная навигация",

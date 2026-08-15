@@ -33,6 +33,7 @@ const pl = {
     heading: "Pisali o nas",
     others: "i inni...",
     linkLabel: "Przeczytaj o ChronoTap na dev.ua",
+    shotamLinkLabel: "Przeczytaj o ChronoTap na #ШОТАМ",
   },
   nav: {
     ariaLabel: "Główna nawigacja",

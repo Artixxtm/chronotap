@@ -1,14 +1,15 @@
 import { LOCALE_META, localizedPath } from "@/i18n/config";
 
 const SITE_URL = "https://chronotap.co";
+const CHRONOTAP_ID = `${SITE_URL}/#chronotap`;
 
 export default function PageJsonLd({
   locale,
   pathname,
   name,
   description,
-  productIsMainEntity = false,
-  aboutProduct = false,
+  chronotapIsMainEntity = false,
+  aboutChronotap = false,
 }) {
   const url = `${SITE_URL}${localizedPath(locale, pathname)}`;
   const schema = {
@@ -23,12 +24,12 @@ export default function PageJsonLd({
     publisher: { "@id": `${SITE_URL}/#organization` },
   };
 
-  if (productIsMainEntity) {
-    schema.mainEntity = { "@id": `${SITE_URL}/#product` };
+  if (chronotapIsMainEntity) {
+    schema.mainEntity = { "@id": CHRONOTAP_ID };
   }
 
-  if (aboutProduct) {
-    schema.about = { "@id": `${SITE_URL}/#product` };
+  if (aboutChronotap) {
+    schema.about = { "@id": CHRONOTAP_ID };
   }
 
   return (

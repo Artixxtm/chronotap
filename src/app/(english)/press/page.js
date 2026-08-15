@@ -23,7 +23,7 @@ export default function PressPage() {
         pathname="/press"
         name={`${copy.meta.title} — ChronoTap`}
         description={copy.meta.description}
-        aboutProduct
+        aboutChronotap
       />
       <PressClient />
     </>

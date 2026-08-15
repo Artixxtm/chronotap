@@ -1,9 +1,6 @@
-import { localizedPath } from "@/i18n/config";
-
 const SITE_URL = "https://chronotap.co";
 
-export default function JsonLd({ locale, productDescription }) {
-  const productPageUrl = `${SITE_URL}${localizedPath(locale)}`;
+export default function JsonLd({ productDescription }) {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -14,14 +11,19 @@ export default function JsonLd({ locale, productDescription }) {
         url: SITE_URL,
         logo: {
           "@type": "ImageObject",
+          "@id": `${SITE_URL}/#logo`,
           url: `${SITE_URL}/icon-512.png`,
           width: 512,
           height: 512,
         },
         founder: {
-          "@type": "Person",
-          name: "Artem Naumenko",
+          "@id": `${SITE_URL}/#founder`,
         },
+      },
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#founder`,
+        name: "Artem Naumenko",
       },
       {
         "@type": "WebSite",
@@ -32,19 +34,17 @@ export default function JsonLd({ locale, productDescription }) {
         inLanguage: ["en", "uk", "ru", "pl"],
       },
       {
-        "@type": "Product",
-        "@id": `${SITE_URL}/#product`,
+        "@type": "Thing",
+        "@id": `${SITE_URL}/#chronotap`,
         name: "ChronoTap",
-        url: productPageUrl,
         description: productDescription,
-        category: "Physical NFC time capsule for digital memories",
+        disambiguatingDescription:
+          "A physical NFC time capsule for digital memories.",
+        url: SITE_URL,
         image: [
           `${SITE_URL}/og-image.jpg`,
           `${SITE_URL}/capsule.webp`,
         ],
-        brand: { "@id": `${SITE_URL}/#organization` },
-        manufacturer: { "@id": `${SITE_URL}/#organization` },
-        mainEntityOfPage: { "@id": `${productPageUrl}#webpage` },
       },
     ],
   };

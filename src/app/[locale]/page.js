@@ -14,7 +14,7 @@ export default async function Page({ params }) {
         pathname="/"
         name={messages.meta.title}
         description={messages.meta.description}
-        productIsMainEntity
+        chronotapIsMainEntity
       />
       <FaqJsonLd locale={locale} featured />
       <HomePage />

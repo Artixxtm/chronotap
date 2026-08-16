@@ -12,6 +12,15 @@ export function useNavTheme(defaultTheme = "light") {
     const sections = Array.from(document.querySelectorAll("[data-nav-theme]"));
     if (!sections.length) return;
 
+    const onThemeOverride = (event) => {
+      const next = event.detail?.theme;
+      if (next === "light" || next === "dark") {
+        setTheme((prev) => (prev === next ? prev : next));
+      }
+    };
+
+    window.addEventListener("chronotap:nav-theme", onThemeOverride);
+
     const setFor = (section) => {
       const next = section.dataset.navTheme;
       setTheme((prev) => (prev === next ? prev : next));
@@ -33,7 +42,10 @@ export function useNavTheme(defaultTheme = "light") {
     });
     if (initial) setFor(initial);
 
-    return () => triggers.forEach((t) => t.kill());
+    return () => {
+      window.removeEventListener("chronotap:nav-theme", onThemeOverride);
+      triggers.forEach((t) => t.kill());
+    };
   }, []);
 
   return theme;

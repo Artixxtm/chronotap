@@ -19,10 +19,10 @@ const CLink = motion.create(Link, { forwardMotionProps: true });
 const CImage = motion.create(Image, { forwardMotionProps: true });
 
 const NAV_LINKS = [
-  { key: "home", href: "#" },
   { key: "why", href: "#why" },
   { key: "what", href: "#what" },
   { key: "how", href: "#how" },
+  { key: "ways", href: "#ways" },
   { key: "faq", href: "#faq" },
   { key: "waitlist", href: "#waitlist" },
   { key: "shop", href: "/shop" },

@@ -25,11 +25,11 @@ export default function FeaturedIn() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.8, ease: EASE }}
-        className="mx-auto flex w-full max-w-312.5 flex-col items-center justify-center gap-3 rounded-3xl border border-black/8 bg-[#f1f1ee] px-5 py-5 md:min-h-36 md:flex-row md:justify-between md:gap-6 md:px-9 md:py-7 lg:px-12"
+        className="mx-auto flex w-full max-w-312.5 flex-col items-center justify-center gap-4 rounded-3xl border border-black/8 bg-[#f1f1ee] px-5 py-5 md:min-h-36 md:flex-row md:justify-between md:gap-6 md:px-9 md:py-7 lg:px-12"
       >
         <h2
           id="featured-in-heading"
-          className="text-center font-main text-xl font-medium leading-none tracking-[-0.025em] md:text-left md:text-[clamp(1.5rem,3.5vw,2.75rem)]"
+          className="text-center font-main text-xl font-medium leading-none tracking-tight md:text-left md:text-[clamp(1.5rem,3.5vw,2.75rem)]"
         >
           {messages.featuredIn.heading}
         </h2>

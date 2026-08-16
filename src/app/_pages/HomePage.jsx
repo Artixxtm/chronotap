@@ -6,6 +6,7 @@ import Header from "@/sections/Header";
 
 const Why = dynamic(() => import("@/sections/Why"));
 const How = dynamic(() => import("@/sections/How"));
+const Ways = dynamic(() => import("@/sections/Ways"));
 const Faq = dynamic(() => import("@/sections/Faq"));
 const FeaturedIn = dynamic(() => import("@/sections/FeaturedIn"));
 const Waitlist = dynamic(() => import("@/sections/Waitlist"));
@@ -20,6 +21,7 @@ export default function HomePage() {
         <Header setModalState={setModalState} />
         <Why />
         <How />
+        <Ways />
         <Faq />
         <FeaturedIn />
         <Waitlist />

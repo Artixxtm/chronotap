@@ -20,7 +20,7 @@ export default function Faq() {
     <section
       id="faq"
       data-nav-theme="dark"
-      className="relative isolate w-full overflow-hidden px-6 py-24 text-black md:px-10 md:py-36 lg:py-44"
+      className="relative isolate z-2 -mt-[66dvh] w-full overflow-hidden px-6 py-24 text-black motion-reduce:mt-0 md:px-10 md:py-36 lg:py-44"
     >
       <div className="relative z-1 mx-auto flex w-full max-w-312.5 flex-col items-center gap-10 md:gap-14 lg:gap-16 xl:gap-28">
         <div className="relative w-full lg:min-h-full">

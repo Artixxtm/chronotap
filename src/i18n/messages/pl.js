@@ -46,6 +46,7 @@ const pl = {
       why: "Dlaczego",
       what: "Co to",
       how: "Jak to",
+      ways: "SPOSOBY",
       faq: "Pytania?",
       waitlist: "Dołącz",
       shop: "Sklep",

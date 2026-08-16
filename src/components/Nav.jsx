@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import ChronoLogo from "@/components/icons/ChronoLogo";
 import HamburgerIcon from "@/components/icons/HamburgerIcon";
 import MenuPanel from "@/components/MenuPanel";
@@ -56,6 +57,7 @@ function getRadius(vw, vh) {
 
 const Nav = () => {
   const { messages } = useI18n();
+  const lenis = useLenis();
   const [isOpen, setIsOpen] = useState(false);
   const sectionTheme = useNavTheme("light");
   const surface = NAV_SURFACE[sectionTheme];
@@ -77,6 +79,12 @@ const Nav = () => {
   }, [isOpen]);
 
   const toggle = () => setIsOpen((prev) => !prev);
+
+  const handleLogoClick = () => {
+    setIsOpen(false);
+    lenis?.start();
+    lenis?.scrollTo(0, { force: true });
+  };
 
   const navEdge = getNavEdge(vw);
   const closedSize = getClosedSize(vw, vh);
@@ -122,7 +130,14 @@ const Nav = () => {
         "top-(--nav-edge) px-(--nav-edge)",
       )}
     >
-      <ChronoLogo isOpen={isOpen} color={logoColor} />
+      <button
+        type="button"
+        aria-label={messages.nav.links.home}
+        onClick={handleLogoClick}
+        className="relative z-50 cursor-pointer"
+      >
+        <ChronoLogo isOpen={isOpen} color={logoColor} />
+      </button>
 
       <motion.div
         role="dialog"

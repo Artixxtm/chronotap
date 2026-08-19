@@ -9,6 +9,7 @@ import { localizedPath } from "@/i18n/config";
 import { getPressCopy } from "@/i18n/press";
 import {
   getDevUaArticleUrl,
+  MY_COMPANY_POLSKA_ARTICLE_URL,
   SHOTAM_ARTICLE_URL,
 } from "@/constants/featured";
 
@@ -156,11 +157,27 @@ export default function PressClient() {
               </a>
             </div>
             <div className="mt-8 flex flex-col items-start gap-4">
-              <div className="inline-flex max-w-full items-center gap-3 rounded-full bg-[#f1f1ee] px-4 py-2 text-black sm:gap-4 sm:px-5 sm:py-3">
-                <span className="font-main text-[10px] uppercase tracking-[0.16em] text-black/50">
+              <div className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-[#f1f1ee] px-2.5 py-2 text-black sm:gap-3 sm:px-5 sm:py-3">
+                <span className="font-main text-[8px] uppercase tracking-[0.14em] text-black/50 sm:text-[10px] sm:tracking-[0.16em]">
                   Featured in
                 </span>
-                <span className="h-6 w-px bg-black/15" aria-hidden="true" />
+                <span className="h-5 w-px bg-black/15 sm:h-6" aria-hidden="true" />
+                <a
+                  href={MY_COMPANY_POLSKA_ARTICLE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Read about ChronoTap on My Company Polska"
+                  className="rounded-md transition-opacity duration-300 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-black"
+                >
+                  <Image
+                    src="/featured/my-company-polska.png"
+                    alt="My Company Polska"
+                    width={561}
+                    height={224}
+                    className="h-auto w-16 sm:w-22"
+                  />
+                </a>
+                <span className="h-5 w-px bg-black/15 sm:h-6" aria-hidden="true" />
                 <a
                   href={featuredArticleUrl}
                   target="_blank"
@@ -173,10 +190,10 @@ export default function PressClient() {
                     alt="dev.ua"
                     width={596}
                     height={168}
-                    className="h-5 w-auto sm:h-6"
+                    className="h-4 w-auto sm:h-6"
                   />
                 </a>
-                <span className="h-6 w-px bg-black/15" aria-hidden="true" />
+                <span className="h-5 w-px bg-black/15 sm:h-6" aria-hidden="true" />
                 <a
                   href={SHOTAM_ARTICLE_URL}
                   target="_blank"
@@ -189,7 +206,7 @@ export default function PressClient() {
                     alt="#ШОТАМ"
                     width={411}
                     height={414}
-                    className="h-8 w-auto sm:h-9"
+                    className="h-7 w-auto sm:h-9"
                   />
                 </a>
               </div>

@@ -35,6 +35,7 @@ const en = {
     others: "and others...",
     linkLabel: "Read about ChronoTap on dev.ua",
     shotamLinkLabel: "Read about ChronoTap on #ШОТАМ",
+    myCompanyLinkLabel: "Read about ChronoTap on My Company Polska",
   },
   nav: {
     ariaLabel: "Main navigation",

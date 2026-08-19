@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useI18n } from "@/i18n/I18nProvider";
 import {
   getDevUaArticleUrl,
+  MY_COMPANY_POLSKA_ARTICLE_URL,
   SHOTAM_ARTICLE_URL,
 } from "@/constants/featured";
 
@@ -34,7 +35,22 @@ export default function FeaturedIn() {
           {messages.featuredIn.heading}
         </h2>
 
-        <div className="flex items-center justify-center gap-2.5 md:gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 md:flex-nowrap md:gap-5">
+          <a
+            href={MY_COMPANY_POLSKA_ARTICLE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={messages.featuredIn.myCompanyLinkLabel}
+            className="rounded-lg transition-opacity duration-300 hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+          >
+            <Image
+              src="/featured/my-company-polska.png"
+              alt="My Company Polska"
+              width={561}
+              height={224}
+              className="h-auto w-20 md:w-32 lg:w-36"
+            />
+          </a>
           <a
             href={getDevUaArticleUrl(locale)}
             target="_blank"
@@ -47,7 +63,7 @@ export default function FeaturedIn() {
               alt="dev.ua"
               width={596}
               height={168}
-              className="h-auto w-24 md:w-40 lg:w-44"
+              className="h-auto w-20 md:w-40 lg:w-44"
             />
           </a>
           <a

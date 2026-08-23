@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { useLenis } from "lenis/react";
 import useResponsive from "@/hooks/useResponsive";
+import useIsPhone from "@/hooks/useIsPhone";
 
 const lerp = (start, end, factor) => start + (end - start) * factor;
 
@@ -27,6 +28,14 @@ const ParallaxImage = ({ children, className, parallaxEnabled = true }) => {
   const targetTranslateY = useRef(0);
   const rafId = useRef(null);
   const { isMobile } = useResponsive();
+  const isPhone = useIsPhone();
+
+  const updateTarget = (scroll) => {
+    if (!bounds.current || !parallaxEnabled) return;
+    const relativeScroll = scroll - bounds.current.top;
+    const parallaxFactor = isMobile ? 0.15 : 0.2;
+    targetTranslateY.current = relativeScroll * parallaxFactor;
+  };
 
   useEffect(() => {
     const updateBounds = () => {
@@ -58,11 +67,17 @@ const ParallaxImage = ({ children, className, parallaxEnabled = true }) => {
   }, [parallaxEnabled]);
 
   useLenis(({ scroll }) => {
-    if (!bounds.current || !parallaxEnabled) return;
-    const relativeScroll = scroll - bounds.current.top;
-    const parallaxFactor = isMobile ? 0.15 : 0.2;
-    targetTranslateY.current = relativeScroll * parallaxFactor;
+    if (!isPhone) updateTarget(scroll);
   });
+
+  useEffect(() => {
+    if (!isPhone) return;
+
+    const onScroll = () => updateTarget(window.scrollY);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isPhone, isMobile, parallaxEnabled]);
 
   return (
     <div

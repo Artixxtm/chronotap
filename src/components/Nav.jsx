@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useLenis } from "lenis/react";
+import useAppScroll from "@/hooks/useAppScroll";
 import ChronoLogo from "@/components/icons/ChronoLogo";
 import HamburgerIcon from "@/components/icons/HamburgerIcon";
 import MenuPanel from "@/components/MenuPanel";
@@ -57,7 +57,7 @@ function getRadius(vw, vh) {
 
 const Nav = () => {
   const { messages } = useI18n();
-  const lenis = useLenis();
+  const { isPhone, scrollTo } = useAppScroll();
   const [isOpen, setIsOpen] = useState(false);
   const sectionTheme = useNavTheme("light");
   const surface = NAV_SURFACE[sectionTheme];
@@ -82,8 +82,15 @@ const Nav = () => {
 
   const handleLogoClick = () => {
     setIsOpen(false);
-    lenis?.start();
-    lenis?.scrollTo(0, { force: true });
+
+    if (isPhone && isOpen) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollTo(0));
+      });
+      return;
+    }
+
+    scrollTo(0, { force: true });
   };
 
   const navEdge = getNavEdge(vw);

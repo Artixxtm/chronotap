@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useLenis } from "lenis/react";
+import useAppScroll from "@/hooks/useAppScroll";
 import { IoMdTime, IoMdArrowDown } from "react-icons/io";
 import BackgroundPicture from "@/components/ui/BackgroundPicture";
 import Button from "@/components/ui/Button";
@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 
 const Header = ({ setModalState }) => {
   const { messages } = useI18n();
-  const lenis = useLenis();
+  const { scrollTo } = useAppScroll();
   const pathname = usePathname();
   const sectionRef = useRef(null);
 
@@ -91,7 +91,7 @@ const Header = ({ setModalState }) => {
 
             <Button
               variant="secondary"
-              onClick={() => lenis?.scrollTo("#why")}
+              onClick={() => scrollTo("#why")}
               fullWidthOnMobile
               className="hero-cta relative"
             >

@@ -6,7 +6,7 @@ import {
   NAV_SURFACE,
 } from "@/constants/styles";
 import { motion } from "framer-motion";
-import { useLenis } from "lenis/react";
+import useAppScroll from "@/hooks/useAppScroll";
 import { ScrollTrigger } from "@/utils/gsap";
 import { HOW_TAP_START_FRACTION } from "@/constants/how";
 import Link from "next/link";
@@ -48,23 +48,17 @@ const itemVariants = {
   },
 };
 
-function scrollToHow(lenis) {
-  lenis?.start();
-
+function getHowScrollTarget() {
   const st = ScrollTrigger.getById("how");
 
-  if (!st) {
-    lenis?.scrollTo("#what", { force: true });
-    return;
-  }
+  if (!st) return "#what";
 
-  const target = st.start + HOW_TAP_START_FRACTION * (st.end - st.start);
-  lenis?.scrollTo(target, { force: true });
+  return st.start + HOW_TAP_START_FRACTION * (st.end - st.start);
 }
 
 const MenuPanel = ({ isOpen, onClose, theme = "light" }) => {
   const { locale, messages } = useI18n();
-  const lenis = useLenis();
+  const { isPhone, scrollTo } = useAppScroll();
   const surface = NAV_SURFACE[theme];
   const isDark = theme === "dark";
 
@@ -105,14 +99,22 @@ const MenuPanel = ({ isOpen, onClose, theme = "light" }) => {
                   key={link.href}
                   variants={itemVariants}
                   onClick={() => {
-                    lenis?.start();
-                    if (link.href === "#how") scrollToHow(lenis);
-                    else if (link.href.startsWith("#")) {
-                      lenis?.scrollTo(link.href === "#" ? 0 : link.href, {
-                        force: true,
-                      });
-                    }
+                    const target =
+                      link.href === "#how"
+                        ? getHowScrollTarget()
+                        : link.href === "#"
+                          ? 0
+                          : link.href;
+
                     onClose();
+
+                    if (isPhone) {
+                      requestAnimationFrame(() => {
+                        requestAnimationFrame(() => scrollTo(target));
+                      });
+                    } else {
+                      scrollTo(target, { force: true });
+                    }
                   }}
                   className="menu-panel-link font-main w-fit cursor-pointer uppercase max-[360px]:text-[clamp(1.2rem,5vw,3rem)] text-[clamp(1.35rem,7vw,3rem)] md:text-5xl 2xl:text-5xl font-medium leading-none hover:opacity-60! hover:transition-opacity hover:duration-500"
                 >

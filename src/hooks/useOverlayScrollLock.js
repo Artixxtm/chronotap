@@ -3,9 +3,11 @@
 import { useEffect } from "react";
 import { useLenis } from "lenis/react";
 import { getScrollNormalizer } from "@/lib/scrollNormalizer";
+import useIsPhone from "@/hooks/useIsPhone";
 
 export default function useOverlayScrollLock(isOpen) {
   const lenis = useLenis();
+  const isPhone = useIsPhone();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -16,14 +18,18 @@ export default function useOverlayScrollLock(isOpen) {
 
     html.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
-    lenis?.stop();
-    getScrollNormalizer()?.disable();
+    if (!isPhone) {
+      lenis?.stop();
+      getScrollNormalizer()?.disable();
+    }
 
     return () => {
       html.style.overflow = prevHtmlOverflow;
       document.body.style.overflow = prevBodyOverflow;
-      lenis?.start();
-      getScrollNormalizer()?.enable();
+      if (!isPhone) {
+        lenis?.start();
+        getScrollNormalizer()?.enable();
+      }
     };
-  }, [isOpen, lenis]);
+  }, [isOpen, isPhone, lenis]);
 }

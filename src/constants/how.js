@@ -41,6 +41,7 @@ export const HOW_ANIMATION = {
   },
 
   mobileScrollScale: 0.78,
+  mobileMinScrollPx: 2600,
  
   ease: {
     settle: "power2.out",

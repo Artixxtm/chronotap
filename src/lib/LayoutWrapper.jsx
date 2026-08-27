@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
+import { useReducedMotion } from "framer-motion";
 import { gsap, ScrollTrigger } from "@/utils/gsap";
 import { setScrollNormalizer } from "@/lib/scrollNormalizer";
 import useIsPhone from "@/hooks/useIsPhone";
@@ -18,6 +19,7 @@ function ScrollTriggerSync() {
 export default function LayoutWrapper({ children }) {
   const lenisRef = useRef(null);
   const isPhone = useIsPhone();
+  const shouldReduceMotion = useReducedMotion();
   const pathname = usePathname();
   const hideMenu = /^\/(?:(?:ua|ru|pl)\/)?(?:privacy|shop|faq|press)$/.test(pathname);
 
@@ -61,8 +63,9 @@ export default function LayoutWrapper({ children }) {
   }, [pathname]); // isPhone intentionally excluded: resizing must not reset the page.
 
   useEffect(() => {
-    if (isPhone) {
-      setScrollNormalizer(null);
+    setScrollNormalizer(null);
+
+    if (isPhone || shouldReduceMotion) {
       ScrollTrigger.refresh();
       return;
     }
@@ -73,39 +76,38 @@ export default function LayoutWrapper({ children }) {
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    const normalizer = ScrollTrigger.normalizeScroll({
-      type: "touch",
-      allowNestedScroll: true,
-    });
-    setScrollNormalizer(normalizer);
-
     return () => {
       gsap.ticker.remove(update);
-      normalizer?.kill?.();
       setScrollNormalizer(null);
     };
-  }, [isPhone]);
+  }, [isPhone, shouldReduceMotion]);
+
+  const content = (
+    <>
+      {!hideMenu && <Nav />}
+      {children}
+    </>
+  );
 
   return (
     <ReactLenis
       root
       ref={lenisRef}
       options={{
-        duration: 2,
+        duration: shouldReduceMotion ? 0 : 1.05,
         easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-        lerp: 0.1,
+        lerp: shouldReduceMotion ? 1 : 0.18,
         orientation: "vertical",
         gestureOrientation: "vertical",
-        smoothWheel: !isPhone,
+        smoothWheel: !isPhone && !shouldReduceMotion,
         syncTouch: false,
-        touchMultiplier: isPhone ? 1 : 2,
+        touchMultiplier: 1,
         autoRaf: false,
         prevent: (node) => node.id === "modalScroll",
       }}
     >
       <ScrollTriggerSync />
-      {!hideMenu && <Nav />}
-      {children}
+      {content}
     </ReactLenis>
   );
 }

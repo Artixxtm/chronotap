@@ -85,7 +85,7 @@ function ReducedMotionWays({ copy, scenes }) {
             data-nav-theme="light"
             className="relative mx-auto min-h-[92svh] w-full max-w-450 overflow-hidden"
           >
-            <div className="ways-media-vignette absolute inset-x-0 top-1/2 h-[82svh] -translate-y-1/2 overflow-hidden">
+            <div className="absolute inset-x-0 top-1/2 h-[82svh] -translate-y-1/2 overflow-hidden">
               <Image
                 src={scene.image}
                 alt={scene.alt}
@@ -119,7 +119,7 @@ export default function Ways() {
     ...copy.scenes[scene.id],
   }));
   const shouldReduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
+  const [enableDesktopTimeline, setEnableDesktopTimeline] = useState(false);
 
   const sectionRef = useRef(null);
   const introRef = useRef(null);
@@ -132,9 +132,13 @@ export default function Ways() {
   const imageRefs = useRef([]);
   const copyRefs = useRef([]);
 
-  useLayoutEffect(() => setMounted(true), []);
+  useLayoutEffect(() => {
+    setEnableDesktopTimeline(
+      window.matchMedia("(min-width: 768px)").matches,
+    );
+  }, []);
 
-  const enableTimeline = mounted && !shouldReduceMotion;
+  const enableTimeline = enableDesktopTimeline && !shouldReduceMotion;
 
   useLayoutEffect(() => {
     if (!enableTimeline) return;
@@ -331,7 +335,7 @@ export default function Ways() {
     };
   }, [enableTimeline]);
 
-  if (shouldReduceMotion) {
+  if (!enableDesktopTimeline || shouldReduceMotion) {
     return <ReducedMotionWays copy={copy} scenes={scenes} />;
   }
 

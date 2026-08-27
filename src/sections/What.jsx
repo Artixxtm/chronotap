@@ -7,11 +7,11 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { FADE_UP_CONTAINER, FADE_UP_ITEM } from "@/constants/animations";
+import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
+import useIsPhone from "@/hooks/useIsPhone";
 
 const ORBIT_DURATION_MS = 110000;
 const ORBIT_SQUEEZE_Y = 0.84;
@@ -42,9 +42,10 @@ function useOrbit(containerRef, itemRefs, count, jitter, disabled) {
     let radiusX = 0;
     let radiusY = 0;
     let raf = 0;
-    let lastTime = performance.now();
+    let lastTime = 0;
     let elapsed = 0;
-    let paused = false;
+    let isIntersecting = false;
+    let isDocumentVisible = !document.hidden;
 
     const measure = () => {
       radiusX = container.offsetWidth * 0.55;
@@ -58,34 +59,69 @@ function useOrbit(containerRef, itemRefs, count, jitter, disabled) {
     const angleStep = 360 / count;
 
     const tick = (now) => {
+      if (!isIntersecting || !isDocumentVisible) {
+        raf = 0;
+        return;
+      }
+
       const delta = now - lastTime;
       lastTime = now;
 
-      if (!paused) {
-        elapsed = (elapsed + delta) % ORBIT_DURATION_MS;
-        const baseAngle = (elapsed / ORBIT_DURATION_MS) * 360;
+      elapsed = (elapsed + delta) % ORBIT_DURATION_MS;
+      const baseAngle = (elapsed / ORBIT_DURATION_MS) * 360;
 
-        itemRefs.current.forEach((el, i) => {
-          if (!el) return;
-          const j = jitter[i];
-          const angle =
-            baseAngle + angleStep * i + j.angle * ANGLE_JITTER * angleStep - 90;
-          const radiusScale = 1 + j.radius * RADIUS_JITTER;
-          const rad = (angle * Math.PI) / 180;
-          const x = radiusX * radiusScale * Math.cos(rad);
-          const y = radiusY * radiusScale * Math.sin(rad);
-          el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
-        });
-      }
+      itemRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const j = jitter[i];
+        const angle =
+          baseAngle + angleStep * i + j.angle * ANGLE_JITTER * angleStep - 90;
+        const radiusScale = 1 + j.radius * RADIUS_JITTER;
+        const rad = (angle * Math.PI) / 180;
+        const x = radiusX * radiusScale * Math.cos(rad);
+        const y = radiusY * radiusScale * Math.sin(rad);
+        el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+      });
 
       raf = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame(tick);
+    const stop = () => {
+      if (!raf) return;
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    const start = () => {
+      if (raf || !isIntersecting || !isDocumentVisible) return;
+      lastTime = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const syncPlayback = () => {
+      if (isIntersecting && isDocumentVisible) start();
+      else stop();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        syncPlayback();
+      },
+      { rootMargin: "160px 0px", threshold: 0.01 },
+    );
+    observer.observe(container);
+
+    const handleVisibilityChange = () => {
+      isDocumentVisible = !document.hidden;
+      syncPlayback();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      observer.disconnect();
       ro.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [containerRef, itemRefs, count, jitter, disabled]);
 }
@@ -95,6 +131,7 @@ const What = forwardRef(function What({ children }, ref) {
   const bullets = messages.what.bullets;
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
+  const isPhone = useIsPhone();
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
   const headingTopRef = useRef(null);
@@ -110,7 +147,13 @@ const What = forwardRef(function What({ children }, ref) {
   pillRefs.current = [];
 
   const jitter = usePillJitter(bullets.length);
-  useOrbit(orbitRef, pillRefs, bullets.length, jitter, shouldReduceMotion);
+  useOrbit(
+    orbitRef,
+    pillRefs,
+    bullets.length,
+    jitter,
+    shouldReduceMotion || isPhone,
+  );
 
   useImperativeHandle(
     ref,
@@ -227,24 +270,19 @@ const What = forwardRef(function What({ children }, ref) {
               loading="lazy"
               className="h-auto w-[clamp(8rem,min(45vw,34dvh),14rem)] select-none object-contain"
             />
-            <motion.div
+            <div
               ref={pillsMobileWrapRef}
-              initial={shouldReduceMotion ? "visible" : "hidden"}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.4 }}
-              variants={FADE_UP_CONTAINER}
               className="flex w-full max-w-70 flex-wrap items-center justify-center gap-2 sm:gap-2.5"
             >
               {bullets.map((bullet) => (
-                <motion.span
+                <span
                   key={bullet}
-                  variants={FADE_UP_ITEM}
                   className={PILL_CLASSES}
                 >
                   <span className="relative top-px select-none">{bullet}</span>
-                </motion.span>
+                </span>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
 

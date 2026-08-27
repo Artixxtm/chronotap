@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { useLenis } from "lenis/react";
+import { useReducedMotion } from "framer-motion";
 import useResponsive from "@/hooks/useResponsive";
 import useIsPhone from "@/hooks/useIsPhone";
 
@@ -29,61 +30,106 @@ const ParallaxImage = ({ children, className, parallaxEnabled = true }) => {
   const rafId = useRef(null);
   const { isMobile } = useResponsive();
   const isPhone = useIsPhone();
+  const shouldReduceMotion = useReducedMotion();
+  const disableParallax = !parallaxEnabled || isPhone || shouldReduceMotion;
 
   const updateTarget = (scroll) => {
-    if (!bounds.current || !parallaxEnabled) return;
+    if (!bounds.current || disableParallax) return;
     const relativeScroll = scroll - bounds.current.top;
     const parallaxFactor = isMobile ? 0.15 : 0.2;
     targetTranslateY.current = relativeScroll * parallaxFactor;
   };
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    if (disableParallax) {
+      wrapper.style.transform = "translateY(0)";
+      return;
+    }
+
     const updateBounds = () => {
-      if (wrapperRef.current) {
-        bounds.current = { top: getStaticDocumentTop(wrapperRef.current) };
-      }
+      bounds.current = { top: getStaticDocumentTop(wrapper) };
     };
 
     updateBounds();
     window.addEventListener("resize", updateBounds);
 
+    let isIntersecting = false;
+    let isDocumentVisible = !document.hidden;
+
     const animate = () => {
-      if (wrapperRef.current && parallaxEnabled) {
-        currentTranslateY.current = lerp(
-          roundNumber(currentTranslateY.current, 6),
-          roundNumber(targetTranslateY.current, 6),
-          0.1
-        );
-        wrapperRef.current.style.transform = `translateY(${currentTranslateY.current}px)`;
+      if (!isIntersecting || !isDocumentVisible) {
+        rafId.current = null;
+        return;
       }
+
+      currentTranslateY.current = lerp(
+        roundNumber(currentTranslateY.current, 6),
+        roundNumber(targetTranslateY.current, 6),
+        0.1,
+      );
+      wrapper.style.transform = `translateY(${currentTranslateY.current}px)`;
       rafId.current = requestAnimationFrame(animate);
     };
-    animate();
+
+    const stop = () => {
+      if (rafId.current === null) return;
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    };
+
+    const start = () => {
+      if (
+        rafId.current !== null ||
+        !isIntersecting ||
+        !isDocumentVisible
+      )
+        return;
+      rafId.current = requestAnimationFrame(animate);
+    };
+
+    const syncPlayback = () => {
+      if (isIntersecting && isDocumentVisible) start();
+      else stop();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        syncPlayback();
+      },
+      { rootMargin: "160px 0px", threshold: 0.01 },
+    );
+    observer.observe(wrapper);
+
+    const handleVisibilityChange = () => {
+      isDocumentVisible = !document.hidden;
+      syncPlayback();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("resize", updateBounds);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+      stop();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [parallaxEnabled]);
+  }, [disableParallax]);
 
   useLenis(({ scroll }) => {
-    if (!isPhone) updateTarget(scroll);
+    if (!disableParallax) updateTarget(scroll);
   });
-
-  useEffect(() => {
-    if (!isPhone) return;
-
-    const onScroll = () => updateTarget(window.scrollY);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isPhone, isMobile, parallaxEnabled]);
 
   return (
     <div
       ref={wrapperRef}
       className={className}
-      style={{ willChange: "transform", transform: "translateY(0)" }}
+      style={{
+        willChange: disableParallax ? "auto" : "transform",
+        transform: "translateY(0)",
+      }}
     >
       {children}
     </div>

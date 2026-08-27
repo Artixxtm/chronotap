@@ -21,7 +21,8 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
   const cfg = HOW_ANIMATION;
   const seg = cfg.segmentScrollVh;
   const pills = [pillsDesktop, pillsMobile];
-  const blurIn = `blur(${cfg.text.blurAmount}px)`;
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  const blurIn = isDesktop ? `blur(${cfg.text.blurAmount}px)` : "blur(0px)";
   const blurOut = "blur(0px)";
 
   if (!section || !card || !steps?.length) return null;
@@ -47,9 +48,14 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
     y: 0,
     filter: blurOut,
   });
-  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
   const scrollDistanceVh =
     HOW_TOTAL_SCROLL_VH * (isDesktop ? 1 : cfg.mobileScrollScale);
+  const scrollDistancePx = () => {
+    const scaledDistance = vh(scrollDistanceVh);
+    return isDesktop
+      ? scaledDistance
+      : Math.max(scaledDistance, cfg.mobileMinScrollPx);
+  };
   gsap.set(subtitle, { xPercent: isDesktop ? -50 : 0, x: 0 });
   gsap.set(pills, { opacity: 1 });
   gsap.set(scrollDown, { opacity: 0, y: -10, filter: blurIn });
@@ -74,48 +80,50 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
       id: "how",
       trigger: section,
       start: cfg.pinStart,
-      end: () => "+=" + vh(scrollDistanceVh),
+      end: () => "+=" + scrollDistancePx(),
       pin: section,
       scrub: cfg.scrub,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      snap: {
-        snapTo: (value) => {
-          const labels = tl.labels;
-          const duration = tl.duration();
-          const currentTime = value * duration;
+      snap: isDesktop
+        ? {
+            snapTo: (value) => {
+              const labels = tl.labels;
+              const duration = tl.duration();
+              const currentTime = value * duration;
 
-          const phoneStart = labels.settled;
-          const phoneEnd = labels.tap;
-          if (
-            phoneStart != null &&
-            phoneEnd != null &&
-            currentTime > phoneStart &&
-            currentTime < phoneEnd
-          )
-            return value;
+              const phoneStart = labels.settled;
+              const phoneEnd = labels.tap;
+              if (
+                phoneStart != null &&
+                phoneEnd != null &&
+                currentTime > phoneStart &&
+                currentTime < phoneEnd
+              )
+                return value;
 
-          const lastSnapTime = labels.relive;
-          if (lastSnapTime == null) return value;
+              const lastSnapTime = labels.relive;
+              if (lastSnapTime == null) return value;
 
-          if (currentTime > lastSnapTime) return value;
+              if (currentTime > lastSnapTime) return value;
 
-          const times = Object.keys(labels)
-            .map((name) => labels[name])
-            .filter((t) => t <= lastSnapTime);
+              const times = Object.keys(labels)
+                .map((name) => labels[name])
+                .filter((t) => t <= lastSnapTime);
 
-          const nearest = times.reduce((closest, t) =>
-            Math.abs(t - currentTime) < Math.abs(closest - currentTime)
-              ? t
-              : closest,
-          );
+              const nearest = times.reduce((closest, t) =>
+                Math.abs(t - currentTime) < Math.abs(closest - currentTime)
+                  ? t
+                  : closest,
+              );
 
-          return nearest / duration;
-        },
-        duration: { min: 0.25, max: 0.6 },
-        ease: "power2.inOut",
-        delay: 0.05,
-      },
+              return nearest / duration;
+            },
+            duration: { min: 0.25, max: 0.6 },
+            ease: "power2.inOut",
+            delay: 0.05,
+          }
+        : false,
     },
     defaults: { ease: "none" },
   });

@@ -134,7 +134,7 @@ export default function Ways() {
 
   useLayoutEffect(() => {
     setEnableDesktopTimeline(
-      window.matchMedia("(min-width: 768px)").matches,
+      true
     );
   }, []);
 

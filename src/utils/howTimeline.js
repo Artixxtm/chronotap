@@ -85,45 +85,43 @@ export function buildHowTimeline({ whatHandle, overlayHandle, onStepChange }) {
       scrub: cfg.scrub,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      snap: isDesktop
-        ? {
-            snapTo: (value) => {
-              const labels = tl.labels;
-              const duration = tl.duration();
-              const currentTime = value * duration;
+      snap: {
+        snapTo: (value) => {
+          const labels = tl.labels;
+          const duration = tl.duration();
+          const currentTime = value * duration;
 
-              const phoneStart = labels.settled;
-              const phoneEnd = labels.tap;
-              if (
-                phoneStart != null &&
-                phoneEnd != null &&
-                currentTime > phoneStart &&
-                currentTime < phoneEnd
-              )
-                return value;
+          const phoneStart = labels.settled;
+          const phoneEnd = labels.tap;
+          if (
+            phoneStart != null &&
+            phoneEnd != null &&
+            currentTime > phoneStart &&
+            currentTime < phoneEnd
+          )
+            return value;
 
-              const lastSnapTime = labels.relive;
-              if (lastSnapTime == null) return value;
+          const lastSnapTime = labels.relive;
+          if (lastSnapTime == null) return value;
 
-              if (currentTime > lastSnapTime) return value;
+          if (currentTime > lastSnapTime) return value;
 
-              const times = Object.keys(labels)
-                .map((name) => labels[name])
-                .filter((t) => t <= lastSnapTime);
+          const times = Object.keys(labels)
+            .map((name) => labels[name])
+            .filter((t) => t <= lastSnapTime);
 
-              const nearest = times.reduce((closest, t) =>
-                Math.abs(t - currentTime) < Math.abs(closest - currentTime)
-                  ? t
-                  : closest,
-              );
+          const nearest = times.reduce((closest, t) =>
+            Math.abs(t - currentTime) < Math.abs(closest - currentTime)
+              ? t
+              : closest,
+          );
 
-              return nearest / duration;
-            },
-            duration: { min: 0.25, max: 0.6 },
-            ease: "power2.inOut",
-            delay: 0.05,
-          }
-        : false,
+          return nearest / duration;
+        },
+        duration: { min: 0.25, max: 0.6 },
+        ease: "power2.inOut",
+        delay: 0.05,
+      },
     },
     defaults: { ease: "none" },
   });

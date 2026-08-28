@@ -40,7 +40,7 @@ export const HOW_ANIMATION = {
     release: 32,
   },
 
-  mobileScrollScale: 0.78,
+  mobileScrollScale: 0.9,
   mobileMinScrollPx: 2600,
  
   ease: {
